@@ -5,7 +5,8 @@ export default {
     refresh: "Refresh",
     settings: "Settings",
     save: 'Save',
-    languagePreferences: 'Select your language'
+    languagePreferences: 'Select your language',
+    refreshed: 'Refreshed',
   },
   tabs: {
     home: "Home",

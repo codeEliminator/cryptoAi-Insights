@@ -6,6 +6,7 @@ export default {
     settings: "Настройки",
     save: 'Сохранить',
     languagePreferences: 'Выберите ваш язык',
+    refreshed: 'Обновлено',
   },
   tabs: {
     home: "Главная",

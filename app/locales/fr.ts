@@ -6,6 +6,7 @@ export default {
     settings: "Paramètres",
     save: 'Sauvegarder',
     languagePreferences: 'Sélectionnez votre langue',
+    refreshed: 'Actualisé',
   },
   tabs: {
     home: "Accueil",
