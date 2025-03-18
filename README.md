@@ -1,50 +1,104 @@
-# Welcome to your Expo app 👋
+# CryptoAI Insights
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## 📊 Overview
 
-1. Install dependencies
+CryptoAI Insights is an advanced cryptocurrency analytics platform that leverages artificial intelligence to provide price predictions, sentiment analysis, and personalized trading recommendations. Our application combines cutting-edge machine learning models with comprehensive market data to help traders make more informed decisions.
 
-   ```bash
-   npm install
-   ```
+## ✨ Key Features
 
-2. Start the app
+- **AI-Powered Price Prediction**: Ensemble of LSTM, GRU, and Transformer models for accurate forecasting
+- **Sentiment Analysis**: Real-time analysis of news, social media, and market sentiment
+- **Portfolio Management**: Track, analyze, and optimize your cryptocurrency holdings
+- **Personalized Recommendations**: Trading suggestions based on your risk profile and market conditions
+- **Real-time Data**: Live updates on cryptocurrency prices, volumes, and market movements
 
-   ```bash
-    npx expo start
-   ```
+## 🛠️ Tech Stack
 
-In the output, you'll find options to open the app in a
+### Frontend
+- React Native with Atomic Design pattern
+- Redux Toolkit for state management
+- React Query for data fetching
+- Styled Components for UI styling
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Backend
+- Python (FastAPI/Django REST)
+- Microservice architecture
+- JWT authentication
+- GraphQL and REST API interfaces
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Data & AI
+- MongoDB for user data
+- TimescaleDB for time series data
+- Redis for caching
+- TensorFlow/PyTorch for AI models
+- NLP with BERT/RoBERTa for sentiment analysis
 
-## Get a fresh project
+### Infrastructure
+- Docker containers
+- Kubernetes orchestration
+- CI/CD through GitHub Actions
+- ELK Stack for monitoring
 
-When you're ready, run:
+## 📱 Application Screenshots
+
+<img src="./assets/images/cryptoai-heatmap-screenshot.png" alt="CryptoAI Market Heatmap" width="300"/>
+
+*CryptoAI Insights mobile app showing the market heatmap and top gainers*
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 16+
+- Python 3.8+
+- Docker and Docker Compose
+- MongoDB
+- Redis
+
+### Installation
 
 ```bash
-npm run reset-project
+# Clone the repository
+git clone https://github.com/codeEliminator/cryptoai-insights.git
+cd cryptoai-insights
+
+# Install frontend dependencies
+cd frontend
+npm install
+
+# Install backend dependencies
+cd ../backend
+pip install -r requirements.txt
+
+# Start the development environment
+docker-compose up -d
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
+## 📋 Project Roadmap
 
-To learn more about developing your project with Expo, look at the following resources:
+- **Phase 1 (MVP)**: Basic UI, Binance integration, simple prediction model
+- **Phase 2**: Advanced AI models, sentiment analysis, improved UI/UX
+- **Phase 3**: Microservice architecture, trading simulator, enhanced analytics
+- **Phase 4**: Performance optimization, expanded documentation
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 💡 Contributing
 
-## Join the community
 
-Join our community of developers creating universal apps.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Acknowledgements
+
+- [Binance API](https://github.com/binance-exchange/binance-official-api-docs)
+- [CoinGecko API](https://www.coingecko.com/en/api)
+- [TensorFlow](https://www.tensorflow.org/)
+- [React Native](https://reactnative.dev/)
+- All other open-source libraries that made this project possible
