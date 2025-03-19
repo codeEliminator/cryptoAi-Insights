@@ -29,7 +29,7 @@ const LanguageOption = React.memo(({ flag, language, code, isSelected, onPress }
   
   const handlePressIn = useCallback(() => {
     Animated.timing(animatedValue, {
-      toValue: 0.97,
+      toValue: 0.87,
       duration: 100,
       useNativeDriver: true
     }).start();

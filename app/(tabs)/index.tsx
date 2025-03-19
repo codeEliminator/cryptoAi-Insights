@@ -10,6 +10,7 @@ import AiRecommendations from '../components/AiRecommendations';
 import Header from '../components/Header';
 import { useCryptoData } from '../hooks/useCryptoData';
 import { StatusBar } from 'expo-status-bar';
+import Loading from '../screens/Loading';
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -32,12 +33,7 @@ const HomeScreen = () => {
   }, [fetchCryptoData]);
 
   if (loading && !refreshing) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#3498db" />
-        <Text style={styles.loadingText}>{locale.common.loading}</Text>
-      </View>
-    );
+    return <Loading locale={locale} />
   }
 
   return (
@@ -56,7 +52,7 @@ const HomeScreen = () => {
       >
         <Heatmap cryptoData={cryptoData} locale={locale} />
         <TrendingCoins cryptoData={cryptoData} locale={locale} />
-        <AiRecommendations locale={locale} router={router}/>
+        <AiRecommendations locale={locale} router={router} language={language}/>
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -73,16 +69,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#121212',
-  },
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: '#121212',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    color: '#ffffff',
-    marginTop: 10,
   },
   scrollView: {
     flex: 1,

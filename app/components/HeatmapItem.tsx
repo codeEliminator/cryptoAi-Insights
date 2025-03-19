@@ -4,7 +4,7 @@ import { CryptoCurrency } from '../types/types';
 
 const HeatmapItem = React.memo(({ coin, onPress }: { coin: CryptoCurrency; onPress?: () => void }) => {
   const getBgColor = () => {
-    const change = coin.price_change_percentage_24h;
+    const change = coin.price_change_percentage_24h ?? 0;
     if (change > 2) return '#00A86B';
     else if (change > 0) return '#4CAF50';
     else if (change > -5) return '#FF6B6B';
@@ -17,7 +17,9 @@ const HeatmapItem = React.memo(({ coin, onPress }: { coin: CryptoCurrency; onPre
       onPress={onPress}
     >
       <Text style={styles.heatmapSymbol}>{coin.symbol.toUpperCase()}</Text>
-      <Text style={styles.heatmapChange}>{coin.price_change_percentage_24h.toFixed(1)}%</Text>
+      <Text style={styles.heatmapChange}>{coin.price_change_percentage_24h != null 
+          ? `${coin.price_change_percentage_24h.toFixed(1)}%` 
+          : 'N/A'}</Text>
     </TouchableOpacity>
   );
 }, (prevProps, nextProps) => {

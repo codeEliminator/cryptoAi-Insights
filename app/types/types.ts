@@ -16,8 +16,16 @@ export interface AIRecommendation {
   reason: string;
   action: 'buy' | 'sell' | 'hold';
 }
+export interface AiRecommendationOptions {
+  specificCoins?: string[];
+  temperature?: number;
+  maxTokens?: number;
+  mockData?: boolean;
+  cacheDuration?: number;
+}
 
 export default {
   CryptoCurrency: {} as CryptoCurrency,
-  AIRecommendation: {} as AIRecommendation
+  AIRecommendation: {} as AIRecommendation,
+  AiRecommendationOptions: {} as AiRecommendationOptions
 };

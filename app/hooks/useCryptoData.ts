@@ -50,8 +50,8 @@ export const useCryptoData = (
         params: {
           vs_currency: 'usd',
           order: 'market_cap_desc',
-          per_page: 100,
-          page,
+          per_page: 200,
+          page: page,
           sparkline: false,
           price_change_percentage: '24h'
         }
