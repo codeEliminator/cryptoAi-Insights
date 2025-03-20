@@ -1,21 +1,34 @@
-// LanguageStore.tsx
-import React, { createContext, useContext, ReactNode } from "react";
-import { makeAutoObservable, computed, runInAction } from "mobx";
+import React, { createContext, useContext, ReactNode, useEffect } from "react";
+import { makeAutoObservable, runInAction } from "mobx";
 import AppLocale from "../../locales/AppLocale";
-import { useLocalObservable, observer,  } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
+import { getLocales } from 'expo-localization';
+import { LocalizationData } from "@/app/types/LocalizationData";
 
 type LanguageKey = keyof typeof AppLocale;
-interface Locale {
-  [key: string]: any;
-}
 
 class LanguageStore {
-  language: LanguageKey = "en";
+  language: LanguageKey = 'en';
 
   constructor() {
     makeAutoObservable(this, {}, {
       autoBind: true, 
     });
+
+    this.initializeLanguage();
+  }
+
+  initializeLanguage() {
+    try {
+      const locales = getLocales();
+      const userDefaultLanguage = locales[0]?.languageCode;
+      
+      if (userDefaultLanguage && userDefaultLanguage in AppLocale) {
+        this.setLanguage(userDefaultLanguage as LanguageKey);
+      }
+    } catch (error) {
+      console.error("Failed to initialize language:", error);
+    }
   }
 
   setLanguage(newLanguage: LanguageKey) {
@@ -24,8 +37,7 @@ class LanguageStore {
     });
   }
 
-  get locale(): Locale {
-    console.log('getting locale for', this.language);
+  get locale(): LocalizationData {
     return AppLocale[this.language];
   }
 }
@@ -38,6 +50,10 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = observer(({ children }) => {
+  useEffect(() => {
+    languageStore.initializeLanguage();
+  }, []);
+
   return (
     <LanguageContext.Provider value={languageStore}>
       {children}

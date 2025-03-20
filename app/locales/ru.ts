@@ -54,6 +54,7 @@ export default {
     volume24h: "Объем (24ч)",
     high24h: "Максимум (24ч)",
     low24h: "Минимум (24ч)",
-    aiAnalysis: "ИИ Анализ"
+    aiAnalysis: "ИИ Анализ",
+    marketOpen: "Рынок открыт",
   }
 };

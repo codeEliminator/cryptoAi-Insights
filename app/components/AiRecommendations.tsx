@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { AIRecommendation } from '../types/types';
 import RecommendationCard from './RecommendationCard';
 import { useAiRecommendation } from '../hooks/useAiRecommendation';
+import { LocalizationData } from '../types/LocalizationData';
 
 const fallbackRecommendations: AIRecommendation[] = [
   {
@@ -29,7 +30,7 @@ const fallbackRecommendations: AIRecommendation[] = [
   }
 ];
 
-const AiRecommendations = ({ router, locale, language }: { router: any, locale: any, language: string }) => {
+const AiRecommendations = ({ router, locale, language }: { router: any, locale: LocalizationData, language: string }) => {
   const { recommendations, loading, error, fetchRecommendations } = useAiRecommendation(language);
   const [aiData, setAiData] = useState<AIRecommendation[]>(fallbackRecommendations);
 

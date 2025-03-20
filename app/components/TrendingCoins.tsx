@@ -3,9 +3,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import { CryptoCurrency } from '../types/types';
 import CoinItem from './CoinItem';
 import { useTrendingCoins } from "../hooks/useTrendingCoins";
+import { LocalizationData } from '../types/LocalizationData';
 
-
-const TrendingCoins = memo(({ cryptoData, locale }: { cryptoData: CryptoCurrency[], locale: any }) => {
+const TrendingCoins = memo(({ cryptoData, locale }: { cryptoData: CryptoCurrency[], locale: LocalizationData }) => {
   const { gainers, losers } = useTrendingCoins(cryptoData);
 
   if (!gainers.length || !losers.length) return null;

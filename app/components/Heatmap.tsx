@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 import { CryptoCurrency } from '../types/types';
 import HeatmapItem from './HeatmapItem';
 import { router } from 'expo-router';
+import { LocalizationData } from '../types/LocalizationData';
 
 const { width } = Dimensions.get('window'); 
 
-const Heatmap = memo(({ cryptoData, locale }: { cryptoData: CryptoCurrency[], locale: any }) => {
+const Heatmap = memo(({ cryptoData, locale }: { cryptoData: CryptoCurrency[], locale: LocalizationData }) => {
   if (!cryptoData.length) return null;
   const paginatedData = [];
   for (let i = 0; i < cryptoData.length; i += 15) {
@@ -25,7 +26,7 @@ const Heatmap = memo(({ cryptoData, locale }: { cryptoData: CryptoCurrency[], lo
         renderItem={({ item }) => (
           <View style={[styles.heatmapGrid, { width: width - 60 }]}>
             {item.map(coin => (
-              <HeatmapItem key={coin.id} coin={coin} onPress={() => { router.push(`/crypto/${coin.id}`); }}/>
+              <HeatmapItem key={coin.id} coin={coin} onPress={() => { router.push(`/crypto/${coin.id}` )}}/>
             ))}
           </View>
         )}

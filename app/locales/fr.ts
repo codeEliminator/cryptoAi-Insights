@@ -54,6 +54,7 @@ export default {
     volume24h: "Volume (24h)",
     high24h: "Maximum (24h)",
     low24h: "Minimum (24h)",
-    aiAnalysis: "Analyse IA"
+    aiAnalysis: "Analyse IA",
+    marketOpen: "Ouverture du marché"
   }
 };

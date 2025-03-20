@@ -11,25 +11,26 @@ import Header from '../components/Header';
 import { useCryptoData } from '../hooks/useCryptoData';
 import { StatusBar } from 'expo-status-bar';
 import Loading from '../screens/Loading';
+import { fakeData } from '../helpers/fakeData';
 
 const HomeScreen = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); //true default -> dev
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
-  const [cryptoData, setCryptoData] = useState<CryptoCurrency[]>([]);
+  const [cryptoData, setCryptoData] = useState<CryptoCurrency[]>(fakeData);
   const [marketTrend, setMarketTrend] = useState<'up' | 'down' | 'neutral'>('neutral');
   const { locale, language } = useLanguage();
 
   const { formattedDate, fetchCryptoData } = useCryptoData(setCryptoData, setMarketTrend, setLoading, setRefreshing, page, refreshing);
 
-  useEffect(() => {
-    fetchCryptoData();
-  }, [fetchCryptoData]);
+  // useEffect(() => {
+  //   // fetchCryptoData();
+  // }, [fetchCryptoData]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    fetchCryptoData(true);
+    // fetchCryptoData(true);
   }, [fetchCryptoData]);
 
   if (loading && !refreshing) {
