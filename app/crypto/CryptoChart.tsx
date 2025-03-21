@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Dimensions, ActivityIndicator, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import axios from 'axios';
-import Loading from '../screens/Loading';
+import useLocalizedDays from '../helpers/getLocalizedDays';
+import useLocalizedMonths from '../helpers/getLocalizedMonths';
 import { LocalizationData } from '../types/LocalizationData';
 import { FakeCoinChartData } from '../helpers/fakeCoinChartData';
+import useChartData from '../hooks/useChartData';
 
+interface ChartData {
+  labels: string[];
+  datasets: { data: number[] }[];
+}
 interface CryptoChartProps {
   coinId: string;
-  timeframe?: '1' | '7' | '30' | '365'; // дни для отображения
+  timeframe?: '1' | '7' | '30' | '365'; 
   chartStyle?: any;
   chartHeight?: number;
   chartWidth?: number;
@@ -18,118 +23,33 @@ interface CryptoChartProps {
 
 const screenWidth = Dimensions.get('window').width;
 
-const CryptoChart: React.FC<CryptoChartProps> = ({ 
-                                              coinId, 
-                                              timeframe = '7',
-                                              chartStyle = {},
-                                              chartHeight = 250,
-                                              chartWidth = screenWidth - 40,
-                                              locale,
-                                              language
-                                            }) => {
-  const [chartData, setChartData] = useState<{
-                                            labels: string[];
-                                            datasets: { data: number[] }[];
-  }>({ labels: [], datasets: [{ data: [0] }]});
-  const getLocalizedDays = () => {
-    const lang = language;
-    switch(lang.toLowerCase()) {
-      case 'en': return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      case 'fr': return ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-      case 'ru': default: return ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-    }
-  };
-  const getLocalizedMonths = () => {
-    const lang = language ;
-    switch(lang.toLowerCase()) {
-      case 'en':
-        return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      case 'fr':
-        return ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
-      case 'ru': ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
-      default:
-        return ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
-    }
-  };
+const defaultProps = {
+  timeframe: '7',
+  chartStyle: {},
+  chartHeight: 250,
+  chartWidth: screenWidth - 40,
+
+}
+
+const CryptoChart: React.FC<CryptoChartProps> = (props) => {
+  const { coinId, timeframe, chartStyle, chartHeight, chartWidth, locale, language } = { ...defaultProps, ...props };
+  const [chartData, setChartData] = useState<ChartData>({ labels: [], datasets: [{ data: [0] }]});
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  
+  const { fetchChartData } = useChartData({ setLoading, setError, setChartData, coinId, timeframe, FakeCoinChartData});
 
-  useEffect(() => {
-
-    const fetchChartData = async () => {
-      setLoading(true);
-      setError(null);
-
-      
-      try {
-        // const response = await axios.get(
-        //   `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${timeframe}`
-        // );
-        // const prices: [number, number][] = response.data.prices;
-        const prices = FakeCoinChartData.prices;
-        
-        const maxLabels = 8;
-        let step = Math.ceil(prices.length / maxLabels);
-        const priceData = prices.map(([, price]) => price);
-        let labels: string[] = [];
-        
-        for (let i = 0; i < prices.length; i += step) {
-          const [timestamp] = prices[i];
-          const date = new Date(timestamp);
-          
-          let label = '';
-          if (timeframe === '1') {
-            label = date.getHours() + ':00';
-          } else if (timeframe === '7') {
-            const days = getLocalizedDays();
-            label = days[date.getDay()];
-          } else if (timeframe === '30') {
-            label = date.getDate().toString() + '/' + (date.getMonth() + 1);
-          } else {
-            const months = getLocalizedMonths();
-            label = months[date.getMonth()];
-          }
-          
-          labels.push(label);
-        }
-      
-        while (labels.length < maxLabels) {
-          labels.push('');
-        }
-        
-        
-        const paddedData = [...priceData];
-        while (paddedData.length < labels.length * step) {
-          paddedData.push(priceData[priceData.length - 1]);
-        }
-        
-        const chartDataUpdate = {
-          labels,
-          datasets: [{ data: priceData }]
-        };
-        
-        setChartData(chartDataUpdate);
-      } catch (err) {
-        console.error('Ошибка при загрузке данных графика:', err);
-        setError('Не удалось загрузить данные для графика');
-      } finally {
-        setLoading(false);
-      }
-    };
-    
+  useEffect(() => {    
     fetchChartData();
-  }, [coinId, timeframe]);
+  }, [fetchChartData]);
 
   if (loading) {
-    if (loading) {
-      return (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#FFF" />
-          <Text style={styles.loadingText}>{locale.common.loading}</Text>
-        </View>
-      );
-    }
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FFF" />
+        <Text style={styles.loadingText}>{locale.common.loading}</Text>
+      </View>
+    );
   }
   
   if (error) {
@@ -169,27 +89,26 @@ const CryptoChart: React.FC<CryptoChartProps> = ({
 
   return (
     <View style={[styles.container, chartStyle]}>
-      <TouchableWithoutFeedback >
-        <View>
-          <LineChart
-            data={chartData}
-            width={chartWidth}
-            height={chartHeight}
-            chartConfig={chartConfig}
-            bezier
-            withDots={false}
-            withInnerLines={false}
-            withOuterLines={true}
-            withVerticalLines={false}
-            withHorizontalLines={true}
-            withShadow={false}
-            fromZero={false}
-            transparent={true}
-          />
-          
-
+      <View>
+        <LineChart
+          data={chartData}
+          width={chartWidth}
+          height={chartHeight}
+          chartConfig={chartConfig}
+          bezier
+          withDots={false}
+          withInnerLines={false}
+          withOuterLines={true}
+          withVerticalLines={false}
+          withHorizontalLines={true}
+          withShadow={false}
+          fromZero={false}
+          transparent={true}
+        />
         </View>
-      </TouchableWithoutFeedback>
+        <View>
+          <Text style={styles.disclaimerText}>{locale.crypto.pricingDisclaimer}</Text>
+        </View>
     </View>
   );
 };
@@ -218,6 +137,10 @@ const styles = StyleSheet.create({
   errorText: {
     color: '#FFF',
   },
+  disclaimerText: {
+    color: '#dbdbdb',
+    fontSize: 12,
+  }
 });
 
 export default CryptoChart;

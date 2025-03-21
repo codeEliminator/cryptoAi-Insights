@@ -56,5 +56,13 @@ export interface LocalizationData {
     low24h: string;
     aiAnalysis: string;
     marketOpen: string;
+    pricingDisclaimer: string;
+    statistics: string;
+    marketCapRating: string;
+    totalSupply: string;
+    maxSupply: string;
+    aiRecommendation: string;
+    longPressForFullText: string;
+    officialLink: string;
   };
 }

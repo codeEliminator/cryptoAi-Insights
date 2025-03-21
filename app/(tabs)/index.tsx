@@ -57,7 +57,7 @@ const HomeScreen = () => {
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            Powered by CryptoAI • {locale.common.refreshed} {new Date().toLocaleTimeString(language + '-' + language.toUpperCase(), { hour12: false })}
+            Powered by Crypto Insights • {locale.common.refreshed} {new Date().toLocaleTimeString(language + '-' + language.toUpperCase(), { hour12: false })}
           </Text>
         </View>
       </ScrollView>

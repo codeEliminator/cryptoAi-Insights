@@ -5,6 +5,14 @@ const FakeCoinData = {
   image: {
     large: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"
   },
+  market_cap_rank: 1,
+  watchlist_portfolio_users: 1978661,
+  total_supply: 19839593,
+  links: {
+    homepage: [
+      "https://www.bitcoin.com/"
+    ]
+  },
   market_data: {
     current_price: {
       usd: 84216.23

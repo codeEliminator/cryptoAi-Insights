@@ -48,7 +48,7 @@ export default {
     price: "Цена"
   },
   crypto: {
-    about: "О",
+    about: "Про",
     technicalAnalysis: "Техническая оценка",
     marketCap: "Капитализация",
     volume24h: "Объем (24ч)",
@@ -56,5 +56,13 @@ export default {
     low24h: "Минимум (24ч)",
     aiAnalysis: "ИИ Анализ",
     marketOpen: "Рынок открыт",
+    pricingDisclaimer: "Это средний курс между курсами покупки и продажи. Фактический курс варьируется в зависимости от того, покупаете вы или продаете. Данные о ценах предоставлены CryptoInsights.",
+    statistics: "Статистика",
+    marketCapRating: "Рейтинг капитализации",
+    totalSupply: "Общее количество монет",
+    maxSupply: "Максимальное количество монет",
+    aiRecommendation: 'Рекомендация ИИ',
+    longPressForFullText: 'Долгое нажатие для полного текста',
+    officialLink: 'Официальная ссылка',
   }
 };

@@ -55,6 +55,14 @@ export default {
     high24h: "Maximum (24h)",
     low24h: "Minimum (24h)",
     aiAnalysis: "Analyse IA",
-    marketOpen: "Ouverture du marché"
+    marketOpen: "Ouverture du marché",
+    pricingDisclaimer: "Ceci est le taux de change moyen entre les prix d'achat et de vente. Le taux de change reel varie selon si vous achetez ou vendez. Les donnees de prix sont fournies par CryptoInsights.",
+    statistics: "Statistique",
+    marketCapRating: "Note de capitalisation",
+    totalSupply: "Quantité totale",
+    maxSupply: "Quantité maximale",
+    aiRecommendations: "Recommandations IA",
+    longPressForFullText: "Appui long pour le texte intégral",
+    officialLink: 'Lien officiel',
   }
 };

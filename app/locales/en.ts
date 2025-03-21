@@ -56,5 +56,13 @@ export default {
     low24h: "Low (24h)",
     aiAnalysis: "AI Analysis",
     marketOpen: "Market open",
+    pricingDisclaimer: "This is the average exchange rate between buying and selling prices. The actual rate varies depending on whether you are buying or selling. Pricing data is provided by CryptoInsights.",
+    statistics: "Statistic",
+    marketCapRating: "Market Cap Rating",
+    totalSupply: "Total Supply",
+    maxSupply: "Max Supply",
+    aiRecommendation: 'AI Recommendation',
+    longPressForFullText: 'Long press for full text',
+    officialLink: 'Official Link',
   }
 };
