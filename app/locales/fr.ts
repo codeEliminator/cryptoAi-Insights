@@ -61,7 +61,7 @@ export default {
     marketCapRating: "Note de capitalisation",
     totalSupply: "Quantité totale",
     maxSupply: "Quantité maximale",
-    aiRecommendations: "Recommandations IA",
+    aiRecommendation: "Recommandations IA",
     longPressForFullText: "Appui long pour le texte intégral",
     officialLink: 'Lien officiel',
   }

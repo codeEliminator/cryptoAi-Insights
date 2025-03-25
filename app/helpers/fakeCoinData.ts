@@ -13,6 +13,7 @@ const FakeCoinData = {
       "https://www.bitcoin.com/"
     ]
   },
+  max_supply: 21000000,
   market_data: {
     current_price: {
       usd: 84216.23

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { OPENAI_API_KEY } from '@env';
+import Constants from 'expo-constants';
 import { bitcoinAnalysis } from "../helpers/fakeTextDataForAIReccom";
 
 const useAIInfo = (language: string, coinId: string) => {
@@ -12,7 +12,7 @@ const useAIInfo = (language: string, coinId: string) => {
     const prompt = `Проанализируй текущие рыночные тенденции криптовалюты ${coinId} и оцени её инвестиционный потенциал. Дай краткий, но аргументированный ответ: стоит ли её покупать, держать (если она уже есть) или продавать. Понимаю, что это не финансовый совет, но важно услышать твоё мнение на основе данных.`  
     setLoadingAiInfo(true);
     setErrorAiInfo(null);
-
+    const OPENAI_API_KEY = Constants.expoConfig!.extra!.OPENAI_API_KEY;
     try{
       // if(coinId.length === 0) return 
       // const genAI = new GoogleGenerativeAI(OPENAI_API_KEY);

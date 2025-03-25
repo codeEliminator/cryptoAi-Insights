@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { OPENAI_API_KEY } from '@env';
+import Constants from 'expo-constants';
 import { AIRecommendation } from '../types/types';
 
 const SYSTEM_PROMPT = `
@@ -35,12 +35,15 @@ export const useAiRecommendation = (language: string) => {
   const [recommendations, setRecommendations] = useState<AIRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const OPENAI_API_KEY = Constants.expoConfig!.extra!.OPENAI_API_KEY;
   const fetchRecommendations = useCallback(async () => {
     setLoading(true);
     setError(null);
 
     try {
+      if (!OPENAI_API_KEY) {
+        throw new Error("Not Available(No API Key)");
+      }
       const genAI = new GoogleGenerativeAI(OPENAI_API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent(SYSTEM_PROMPT + ` на языке ${language}`);

@@ -1,4 +1,9 @@
-declare module '@env' {
-  export const OPENAI_API_KEY: string;
-  export const BASE_URL: string;
+declare module 'expo-env' {
+  export const Constants: {
+    expoConfig: {
+      extra: {
+        [key: string]: any;
+      };
+    };
+  };
 }
