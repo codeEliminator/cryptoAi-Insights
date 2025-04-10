@@ -37,11 +37,11 @@ export interface CoinDetail {
     total_volume: { usd: number; };
     high_24h: { usd: number; };
     low_24h: { usd: number; };
+    total_supply: number;
+    max_supply: number;
   };
-  max_supply: number;
   description: { en: string; };
   watchlist_portfolio_users: number;
-  total_supply: number;
 }
 
 

@@ -23,12 +23,16 @@ const CryptoInfoCard = ({ coin, locale, abbreviateNumber }: {coin: CoinDetail | 
       </View>
       <View style={styles.row}>
         <Text style={styles.text}>{locale.crypto.totalSupply}</Text>
-        <Text style={styles.text}>{abbreviateNumber(Number(coin?.total_supply))} $</Text>
+        <Text style={styles.text}>{abbreviateNumber(Number(coin?.market_data.total_supply))} $</Text>
       </View>
-      <View style={styles.row}>
-        <Text style={styles.text}>{locale.crypto.maxSupply}</Text>
-        <Text style={styles.text}>{abbreviateNumber(Number(coin?.max_supply))} $</Text>
-      </View>
+      {
+        coin?.market_data.max_supply && (     
+          <View style={styles.row}>
+            <Text style={styles.text}>{locale.crypto.maxSupply}</Text>
+            <Text style={styles.text}>{abbreviateNumber(Number(coin?.market_data.max_supply))} $</Text>
+          </View>
+        )  
+      }
     </View>
   );
 };

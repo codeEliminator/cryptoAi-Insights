@@ -26,7 +26,7 @@ export default {
     marketStable: "Рынок стабилен",
   },
   ai: {
-    title: "ИИ Рекомендации",
+    title: "ИИ Ассистент",
     subtitle: "Основаны на анализе рыночных данных",
     confidence: "Уверенность",
     timeframes: {
@@ -39,13 +39,35 @@ export default {
       sell: "ПРОДАВАТЬ",
       hold: "ДЕРЖАТЬ"
     },
-    marketIndicators: "Рыночные индикаторы"
+    welcomeMessage: 'Привет! Я ваш ИИ-аналитик криптовалют. Как могу помочь вам сегодня?',
+    errorMessage: "Извините, произошла ошибка при обработке вашего запроса. Пожалуйста, попробуйте позже.",
+    marketIndicators: "Рыночные индикаторы",
+    aiAssistant: "ИИ Ассистент",
+    chat: "Чат",
+    analysis: "Анализ",
+    askAboutCrypto: "Спросите о криптовалютах...",
+    noAnalysisAvailable: "Анализ рынка пока недоступен",
+    requestAnalysis: "Запросить анализ",
+    marketAnalysis: "Анализ рынка",
+    marketSentiment: "Настроение рынка",
+    topOpportunities: "Лучшие возможности",
+    marketTrends: "Рыночные тренды",
+    lastUpdated: "Последнее обновление",
+    veryBullish: "Очень бычий",
+    bullish: "Бычий",
+    bearish: "Медвежий",
+    veryBearish: "Очень медвежий",
+    loadingAnalysis: "Загрузка анализа рынка...",
+    clearChat: "Очистить историю чата",
   },
   market: {
     title: "Рынок криптовалют",
     marketCap: "Капитализация",
     change24h: "Изменение (24ч)",
-    price: "Цена"
+    price: "Цена",
+    loadingMore: "Загрузка ещё...",
+    searchPlaceholder: "Поиск криптовалюты...",
+    noResults: "Нет результатов",
   },
   crypto: {
     about: "Про",

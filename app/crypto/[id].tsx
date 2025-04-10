@@ -26,13 +26,13 @@ export default function Coin() {
   const {id} = useLocalSearchParams();
   const {locale, language} = useLanguage();
   const router = useRouter();
-  const [loading, setLoading] = useState(false); //switch to true -> dev
-  const [coin, setCoin] = useState<CoinDetail | null>(FakeCoinData);
+  const [loading, setLoading] = useState(true); //switch to true -> dev
+  const [coin, setCoin] = useState<CoinDetail | null>(null);
   const [change, setChange] = useState(0);
   const [timeframe, setTimeframe] = useState<'1' | '7' | '30' | '365'>('7');
   const [showWebView, setShowWebView] = useState(false);
 
-  const { loadingAiInfo, errorAiInfo, recommendation, fetchAIInfo } = useAIInfo(language, coin?.id || '');
+  const { loadingAiInfo, errorAiInfo, recommendation } = useAIInfo(language, id?.toString() || '');
 
   const handleTimeframeChange = (newTimeframe: '1' | '7' | '30' | '365') => {
     if (timeframe !== newTimeframe) {
@@ -55,14 +55,8 @@ export default function Coin() {
   }
 
   useEffect(() => {
-    // fetchCoinData();
-    fetchAIInfo();
+    fetchCoinData();
   }, [id]);
-  
-  useEffect(() => {
-    // setChange(coin?.market_data.price_change_percentage_24h || 0);
-    setChange(3)
-  })
 
   if(loading || loadingAiInfo){
     return <Loading locale={locale}/>
@@ -131,7 +125,6 @@ export default function Coin() {
               <View style={styles.sectionContainer}>
                 <View style={styles.sectionHeaderContainer}>
                   <Text style={styles.headerText}>{locale.crypto.statistics}</Text>
-                  <Ionicons name='information-circle-outline' size={20} color='white' top={1}/>
                 </View>
                 <CryptoInfoCard 
                   coin={coin} 

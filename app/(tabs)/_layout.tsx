@@ -36,7 +36,7 @@ const MainLayout = observer(() => {
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
-    backgroundColor: "#222", // Темный фон
+    backgroundColor: "#222",
     borderRadius: 20,
     height: 65, 
     shadowColor: "#000",

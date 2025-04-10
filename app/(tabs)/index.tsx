@@ -12,6 +12,7 @@ import { useCryptoData } from '../hooks/useCryptoData';
 import { StatusBar } from 'expo-status-bar';
 import Loading from '../screens/Loading';
 import { fakeData } from '../helpers/fakeData';
+import { observer } from 'mobx-react-lite';
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const HomeScreen = () => {
         }
       >
         <Heatmap cryptoData={cryptoData} locale={locale} />
-        <TrendingCoins cryptoData={cryptoData} locale={locale} />
+        <TrendingCoins cryptoData={cryptoData} locale={locale} router={router}/>
         <AiRecommendations locale={locale} router={router} language={language}/>
 
         <View style={styles.footer}>
@@ -84,4 +85,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo(HomeScreen);
+const HomeScreenObserver = observer(HomeScreen);
+
+export default React.memo(HomeScreenObserver);

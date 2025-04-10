@@ -1,6 +1,7 @@
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { LocalizationData } from '../types/LocalizationData';
 
-export default function Loading({locale}: {locale: any}){
+export default function Loading({locale}: {locale: LocalizationData}){
   return (
     <View style={styles.loadingContainer}>
       <ActivityIndicator size="large" color="#3498db" />

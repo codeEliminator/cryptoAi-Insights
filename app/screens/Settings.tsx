@@ -158,7 +158,7 @@ const SettingsContent = observer(() => {
         ))}
       </View>
       
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <TouchableOpacity 
           style={styles.saveButton}
           activeOpacity={0.8}
@@ -175,7 +175,7 @@ const SettingsContent = observer(() => {
             </Text>
           </LinearGradient>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 });

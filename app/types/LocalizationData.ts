@@ -39,13 +39,35 @@ export interface LocalizationData {
       sell: string;
       hold: string;
     };
+    welcomeMessage: string;
+    errorMessage: string;
     marketIndicators: string;
+    aiAssistant: string;
+    chat: string;
+    analysis: string;
+    askAboutCrypto: string;
+    noAnalysisAvailable: string;
+    requestAnalysis: string;
+    marketAnalysis: string;
+    marketSentiment: string;
+    topOpportunities: string;
+    marketTrends: string;
+    lastUpdated: string;
+    veryBullish: string;
+    bullish: string;
+    bearish: string;
+    veryBearish: string;
+    loadingAnalysis: string;
+    clearChat: string;
   };
   market: {
     title: string;
     marketCap: string;
     change24h: string;
     price: string;
+    loadingMore: string;
+    searchPlaceholder: string;
+    noResults: string;
   };
   crypto: {
     about: string;

@@ -26,7 +26,7 @@ export default {
     marketStable: "Market is Stable",
   },
   ai: {
-    title: "AI Recommendations",
+    title: "AI Assistant",
     subtitle: "Based on market data analysis",
     confidence: "Confidence",
     timeframes: {
@@ -39,13 +39,35 @@ export default {
       sell: "SELL",
       hold: "HOLD"
     },
-    marketIndicators: "Market Indicators"
+    welcomeMessage: 'Hello! I am your AI analyst for cryptocurrencies. How can I help you today?',
+    errorMessage: "Sorry, an error occurred while processing your request. Please try again later.",
+    marketIndicators: "Market Indicators",
+    aiAssistant: "AI Assistant",
+    chat: "Chat",
+    analysis: "Analysis",
+    askAboutCrypto: "Ask about cryptocurrencies...",
+    noAnalysisAvailable: "No market analysis available yet",
+    requestAnalysis: "Request Analysis",
+    marketAnalysis: "Market Analysis",
+    marketSentiment: "Market Sentiment",
+    topOpportunities: "Top Opportunities",
+    marketTrends: "Market Trends",
+    lastUpdated: "Last Updated",
+    veryBullish: "Very Bullish",
+    bullish: "Bullish",
+    bearish: "Bearish",
+    veryBearish: "Very Bearish",
+    loadingAnalysis: "Loading market analysis...",
+    clearChat: "Clear Chat History",
   },
   market: {
     title: "Cryptocurrency Market",
     marketCap: "Market Cap",
     change24h: "Change (24h)",
-    price: "Price"
+    price: "Price",
+    loadingMore: "Loading more...",
+    searchPlaceholder: "Search for a cryptocurrency...",
+    noResults: "No results found",
   },
   crypto: {
     about: "About",

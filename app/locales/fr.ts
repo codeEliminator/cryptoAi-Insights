@@ -26,7 +26,7 @@ export default {
     marketStable: "Le marché est stable",
   },
   ai: {
-    title: "Recommandations IA",
+    title: "Assistant IA",
     subtitle: "Basées sur l'analyse des données du marché",
     confidence: "Confiance",
     timeframes: {
@@ -39,13 +39,35 @@ export default {
       sell: "VENDRE",
       hold: "CONSERVER"
     },
-    marketIndicators: "Indicateurs de marché"
+    welcomeMessage: 'Bonjour! Je suis votre assistant IA pour les cryptomonnaies. Comment puis-je vous aider aujourd\'hui?',
+    errorMessage: "Desole, une erreur s'est produite lors du traitement de votre demande. Veuillez essayer plus tard.",
+    marketIndicators: "Indicateurs de marché",
+    aiAssistant: "Assistant IA",
+    chat: "Chat",
+    analysis: "Analyse",
+    askAboutCrypto: "Posez des questions sur les cryptomonnaies...",
+    noAnalysisAvailable: "Analyse du marché non disponible pour le moment",
+    requestAnalysis: "Demander une analyse",
+    marketAnalysis: "Analyse du marché",
+    marketSentiment: "Sentiment du marché",
+    topOpportunities: "Meilleures opportunités",
+    marketTrends: "Tendances du marché",
+    lastUpdated: "Dernière mise à jour",
+    veryBullish: "Très haussier",
+    bullish: "Haussier",
+    bearish: "Baissier",
+    veryBearish: "Très baissier",
+    loadingAnalysis: "Chargement de l'analyse du marché...",
+    clearChat: "Effacer l'historique du chat",
   },
   market: {
     title: "Marché des cryptomonnaies",
     marketCap: "Capitalisation",
     change24h: "Variation (24h)",
-    price: "Prix"
+    price: "Prix",
+    loadingMore: "Chargement de plus...",
+    searchPlaceholder: "Rechercher une cryptomonnaie...",
+    noResults: "Aucun resultat",
   },
   crypto: {
     about: "À propos de",
