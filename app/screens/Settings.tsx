@@ -157,25 +157,6 @@ const SettingsContent = observer(() => {
           />
         ))}
       </View>
-      
-      {/* <View style={styles.footer}>
-        <TouchableOpacity 
-          style={styles.saveButton}
-          activeOpacity={0.8}
-          onPress={() => navigation.goBack()}
-        >
-          <LinearGradient
-            colors={['#4776E6', '#8E54E9']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.saveButtonGradient}
-          >
-            <Text style={styles.saveButtonText}>
-              {locale.common?.save || "Save"}
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View> */}
     </SafeAreaView>
   );
 });

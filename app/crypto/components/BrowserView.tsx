@@ -7,8 +7,7 @@ import {
   Text, 
   Animated, 
   PanResponder, 
-  Dimensions, 
-  Platform 
+  Dimensions,  
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -45,9 +44,7 @@ const BrowserView: React.FC<BrowserViewProps> = ({ link, showWebView, setShowWeb
         
         iframes.forEach(iframe => {
           try {
-            // Try to add sandbox attribute to prevent scripts
             iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-forms');
-            // Try to set src to about:blank if from YouTube, Vimeo, etc.
             if (iframe.src.includes('youtube') || iframe.src.includes('vimeo')) {
               iframe.setAttribute('data-original-src', iframe.src);
               iframe.setAttribute('src', 'about:blank');
