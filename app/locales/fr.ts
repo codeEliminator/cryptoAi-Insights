@@ -69,6 +69,21 @@ export default {
     searchPlaceholder: "Rechercher une cryptomonnaie...",
     noResults: "Aucun resultat",
   },
+  profile: {
+    connectWallet: "Connectez votre portefeuille",
+    profile: "Profil",
+    connectWalletMessage: "Connectez votre portefeuille pour voir vos actifs",
+    walletAddress: "Adresse du portefeuille",
+    network: "Réseau",
+    nativeBalance: "Solde",
+    tokens: "Tokens",
+    noTokensFound: "Aucun token trouvé",
+    disconnectWallet: "Déconnectez votre portefeuille",
+    loading: "Chargement...",
+    switchToEthereum: "Passer sur Ethereum",
+    switchToPolygon: "Passer sur Polygon",
+
+  },
   crypto: {
     about: "À propos de",
     technicalAnalysis: "Analyse technique",

@@ -69,6 +69,20 @@ export interface LocalizationData {
     searchPlaceholder: string;
     noResults: string;
   };
+  profile: {
+    connectWallet: string;
+    profile: string;
+    connectWalletMessage: string;
+    walletAddress: string;
+    network: string;
+    nativeBalance: string;
+    tokens: string;
+    noTokensFound: string;
+    disconnectWallet: string;
+    loading: string;
+    switchToEthereum: string;
+    switchToPolygon: string;
+  };
   crypto: {
     about: string;
     technicalAnalysis: string;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stack } from "expo-router";
-import { LanguageProvider } from './mobx/LanguageStore/LanguageStore';
+// import { LanguageProvider } from './mobx/LanguageStore/LanguageStore';
+import { MainStoreProvider } from './mobx/MainStore';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -10,7 +11,7 @@ interface RouteParams {
 
 export default function RootLayout() {
   return (
-    <LanguageProvider>
+    <MainStoreProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -47,6 +48,6 @@ export default function RootLayout() {
         </Stack>
       </GestureHandlerRootView>
 
-    </LanguageProvider>
+    </MainStoreProvider>
   );
 }
