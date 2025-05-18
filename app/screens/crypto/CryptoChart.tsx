@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Dimensions, ActivityIndicator, StyleSheet } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import useLocalizedDays from '../helpers/getLocalizedDays';
-import useLocalizedMonths from '../helpers/getLocalizedMonths';
-import { LocalizationData } from '../types/LocalizationData';
-import { FakeCoinChartData } from '../helpers/fakeCoinChartData';
-import useChartData from '../hooks/useChartData';
+import useLocalizedDays from '../../helpers/getLocalizedDays';
+import useLocalizedMonths from '../../helpers/getLocalizedMonths';
+import { LocalizationData } from '../../types/LocalizationData';
+import { FakeCoinChartData } from '../../helpers/fakeCoinChartData';
+import useChartData from '../../hooks/useChartData';
 
 interface ChartData {
   labels: string[];

@@ -14,7 +14,7 @@ export interface AIRecommendation {
   coinName: string;
   confidence: number;
   reason: string;
-  action: 'buy' | 'sell' | 'hold';
+  action: 'buy' | 'sell' | 'hold' | 'N/A';
 }
 export interface AiRecommendationOptions {
   specificCoins?: string[];

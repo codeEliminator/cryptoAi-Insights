@@ -492,13 +492,13 @@ function AiScreenComponent() {
               </View>
 
               <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Рыночные тренды</Text>
+                <Text style={styles.sectionTitle}>{locale.ai.marketTrends}</Text>
                 <Text style={styles.analysisText}>{analysisData.marketTrends}</Text>
               </View>
 
               <View style={styles.footer}>
                 <Text style={styles.footerText}>
-                  {locale.ai.lastUpdated}: {new Date(analysisData.timestamp).toLocaleString()}
+                    Powered by Crypto Insights • {locale.common.refreshed} {new Date().toLocaleTimeString(language + '-' + language.toUpperCase(), { hour12: false })}
                 </Text>
               </View>
             </>

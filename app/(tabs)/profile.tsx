@@ -1,8 +1,7 @@
+import "@walletconnect/react-native-compat";
 import React, { useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, StyleProp, ViewStyle, TextStyle, StatusBar } from 'react-native';
 import { observer } from "mobx-react-lite";
-import { useLanguage } from '../mobx/LanguageStore/LanguageStore';
-import "@walletconnect/react-native-compat";
 import { 
   useAppKit, 
   useAppKitAccount,
@@ -16,7 +15,6 @@ import {
 } from "@reown/appkit-ethers-react-native";
 import Constants from 'expo-constants';
 import { useStore, useLanguageStore, useWalletStore } from '../mobx/MainStore';
-
 interface ProfileProps {}
 const projectId = Constants.expoConfig?.extra?.PROJECT_ID;
 
@@ -192,6 +190,7 @@ const Profile: React.FC<ProfileProps> = observer(() => {
     </SafeAreaView>
   );
 });
+export default Profile;
 
 const styles = StyleSheet.create({
   container: {
@@ -344,4 +343,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;

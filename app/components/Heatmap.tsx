@@ -26,7 +26,10 @@ const Heatmap = memo(({ cryptoData, locale }: { cryptoData: CryptoCurrency[], lo
         renderItem={({ item }) => (
           <View style={[styles.heatmapGrid, { width: width - 60 }]}>
             {item.map(coin => (
-              <HeatmapItem key={coin.id} coin={coin} onPress={() => { router.push(`/crypto/${coin.id}` )}}/>
+              <HeatmapItem key={coin.id} coin={coin} onPress={() => { router.push({
+                pathname: '/screens/crypto/[id]',
+                params: { id: coin.id }
+              });}}/>
             ))}
           </View>
         )}

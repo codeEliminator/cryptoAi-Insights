@@ -10,23 +10,23 @@ const fallbackRecommendations: AIRecommendation[] = [
   {
     coinId: 'bitcoin',
     coinName: 'Bitcoin',
-    confidence: 87,
-    reason: 'Повышенный объем транзакций и институциональный интерес',
-    action: 'buy'
+    confidence: 0,
+    reason: 'N/A',
+    action: 'N/A'
   },
   {
     coinId: 'ethereum',
     coinName: 'Ethereum',
-    confidence: 75,
-    reason: 'Рост активности в DeFi и недавнее обновление сети',
-    action: 'hold'
+    confidence: 0,
+    reason: 'N/A',
+    action: 'N/A'
   },
   {
     coinId: 'solana',
     coinName: 'Solana',
-    confidence: 92,
-    reason: 'Быстрорастущая экосистема и повышенная активность разработчиков',
-    action: 'buy'
+    confidence: 0,
+    reason: 'N/A',
+    action: 'N/A'
   }
 ];
 
@@ -77,7 +77,7 @@ const AiRecommendations = ({ router, locale, language }: { router: any, locale: 
             <RecommendationCard 
               key={recommendation.coinId} 
               recommendation={recommendation}
-              onPress={() => router.push(`/crypto/${recommendation.coinId}`)}
+              onPress={() => router.push(`screens/crypto/${recommendation.coinId}`)}
             />
           ))}
 

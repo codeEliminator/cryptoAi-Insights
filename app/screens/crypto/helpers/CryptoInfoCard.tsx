@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { CoinDetail } from '../../types/types';
+import { CoinDetail } from '../../../types/types';
 import { LocalizationData } from '@/app/types/LocalizationData';
 
 const CryptoInfoCard = ({ coin, locale, abbreviateNumber }: {coin: CoinDetail | null, locale: LocalizationData, abbreviateNumber: (number: number) => string }) => {

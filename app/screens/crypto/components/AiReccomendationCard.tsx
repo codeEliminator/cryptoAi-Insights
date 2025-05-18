@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    height: 200, // Fixed height as requested
+    height: 200,
     backgroundColor: 'rgba(30, 30, 30, 0.9)',
   },
   card: {

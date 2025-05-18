@@ -1,6 +1,5 @@
 import React from 'react';
 import { Stack } from "expo-router";
-// import { LanguageProvider } from './mobx/LanguageStore/LanguageStore';
 import { MainStoreProvider } from './mobx/MainStore';
 import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -29,12 +28,12 @@ export default function RootLayout() {
             })}
           />
           <Stack.Screen
-            name="crypto/[id]"
+            name="screens/crypto/[id]"
             options={({ navigation, route }) => ({
               headerTitleStyle: {fontSize: 22, color: 'white'},
               title: (route.params as RouteParams)?.id
             ? `${String((route.params as RouteParams).id).toUpperCase()}`
-            : "Криптовалюта",
+            : "Currency?",
               headerTransparent: true,
               headerBlurEffect: "systemThickMaterialDark",
               headerLeft: () => (
@@ -44,10 +43,8 @@ export default function RootLayout() {
               ),
             })}
           />
-
         </Stack>
       </GestureHandlerRootView>
-
     </MainStoreProvider>
   );
 }

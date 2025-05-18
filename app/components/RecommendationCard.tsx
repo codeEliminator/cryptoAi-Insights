@@ -11,6 +11,7 @@ const RecommendationCard = React.memo(({ recommendation, onPress }:
     switch(recommendation.action) {
       case 'buy': return '#4CAF50';
       case 'sell': return '#FF6B6B';
+      case 'N/A': return '#000'
       default: return '#FFD700';
     }
   };
@@ -19,6 +20,7 @@ const RecommendationCard = React.memo(({ recommendation, onPress }:
     switch(recommendation.action) {
       case 'buy': return locale.ai.actions.buy;
       case 'sell': return locale.ai.actions.sell;
+      case 'N/A': return 'N/A'
       default: return locale.ai.actions.hold;
     }
   };

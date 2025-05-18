@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { LocalizationData } from '../types/LocalizationData';
+import { LocalizationData } from '../../types/LocalizationData';
 
 interface TimeframeSelectorProps {
   selectedTimeframe: string;

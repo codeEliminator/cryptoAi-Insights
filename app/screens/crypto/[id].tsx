@@ -6,16 +6,15 @@ import Loading from '@/app/screens/Loading';
 import { useLanguage } from '@/app/mobx/LanguageStore/LanguageStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import FakeCoinData from '../helpers/fakeCoinData';
 import { StatusBar } from 'expo-status-bar';
 import CryptoChart from './CryptoChart'; 
 import TimeframeSelector from './TimeFrameSelector';
 import { Ionicons } from '@expo/vector-icons';
-import abbreviateNumber from '../helpers/abbreviateNumber';
-import useAIInfo from '../hooks/useAIInfo';
+import abbreviateNumber from '../../helpers/abbreviateNumber';
+import useAIInfo from '../../hooks/useAIInfo';
 import AiRecommendationCard from './components/AiReccomendationCard';
 import BrowserView from './components/BrowserView';
-import { CoinDetail } from '../types/types';
+import { CoinDetail } from '../../types/types';
 import CryptoInfoCard from './helpers/CryptoInfoCard';
 import CryptoPriceDisplay from './helpers/CryptoPriceDetails';
 
@@ -25,7 +24,6 @@ const systemThickMaterialDark = 'rgba(28, 28, 30, 0.85)'
 export default function Coin() { 
   const {id} = useLocalSearchParams();
   const {locale, language} = useLanguage();
-  const router = useRouter();
   const [loading, setLoading] = useState(true); //switch to true -> dev
   const [coin, setCoin] = useState<CoinDetail | null>(null);
   const [change, setChange] = useState(0);
@@ -43,6 +41,7 @@ export default function Coin() {
   const fetchCoinData = async () => {
     if(!id) return 
     setLoading(true);
+    console.log('Loading in [id]')
     try {
       const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}`);
       setCoin(response.data);
@@ -58,7 +57,7 @@ export default function Coin() {
     fetchCoinData();
   }, [id]);
 
-  if(loading || loadingAiInfo){
+  if(loading){
     return <Loading locale={locale}/>
   } 
   
