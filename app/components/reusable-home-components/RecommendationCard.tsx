@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { AIRecommendation } from "../types/types";
-import { useLanguage } from "../mobx/LanguageStore/LanguageStore";
+import { AIRecommendation } from "../../types/types";
+import {  useLanguageStore } from '../../mobx/MainStore';
 
 const RecommendationCard = React.memo(({ recommendation, onPress }: 
   { recommendation: AIRecommendation; onPress?: () => void }) => {
-  const { locale } = useLanguage();
+  const { locale } = useLanguageStore();
   
   const getActionColor = () => {
     switch(recommendation.action) {

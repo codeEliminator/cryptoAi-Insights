@@ -1,5 +1,5 @@
 import "@walletconnect/react-native-compat";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, StyleProp, ViewStyle, TextStyle, StatusBar } from 'react-native';
 import { observer } from "mobx-react-lite";
 import { 
@@ -15,6 +15,7 @@ import {
 } from "@reown/appkit-ethers-react-native";
 import Constants from 'expo-constants';
 import { useStore, useLanguageStore, useWalletStore } from '../mobx/MainStore';
+import TypingText from "../components/reusable-profile-components/TypingText";
 interface ProfileProps {}
 const projectId = Constants.expoConfig?.extra?.PROJECT_ID;
 
@@ -58,6 +59,7 @@ createAppKit({
 const Profile: React.FC<ProfileProps> = observer(() => {
   const store = useStore();
   const { language, locale } = useLanguageStore();
+  const [currentTitle, setCurrentTitle] = useState(0);
   const walletStore = useWalletStore();
   const { open, close } = useAppKit();
   const {disconnect} = useDisconnect()
@@ -76,6 +78,10 @@ const Profile: React.FC<ProfileProps> = observer(() => {
       walletStore.setProvider(walletProvider);
     }
   }, [walletProvider]);
+
+  useEffect(()=>{
+    setTimeout(() => setCurrentTitle(currentTitle + 1 < locale.profile.entryTitles.length ? currentTitle + 1 : 0), 2000)
+  })
   
   const formatNumber = (num: string | null): string => {
     if (!num) return '0.0000';
@@ -96,21 +102,35 @@ const Profile: React.FC<ProfileProps> = observer(() => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='dark-content'></StatusBar>
+      <StatusBar barStyle='light-content'></StatusBar>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <AppKit></AppKit>
-        <Text style={styles.title}>{locale.profile.profile}</Text>
-        
         {!isConnected ? (
-          <View style={styles.connectContainer}>
-            <Text style={styles.subtitle}>{locale.profile.connectWalletMessage}</Text>
-            <TouchableOpacity 
-              style={styles.customConnectButton} 
-              onPress={handleConnect}
-            >
-              <Text style={styles.buttonText}>{locale.profile.connectWallet}</Text>
-            </TouchableOpacity>
+          <View style={styles.connectWrapper}>
+
+            <View style={styles.connectContainer}>
+              <TypingText 
+                textArray={locale.profile.entryTitles}
+                style={styles.entryTitle}
+                typingSpeed={70}
+                delayBetweenTexts={500}
+                delayBeforeErasing={2000}
+              />
+              <TouchableOpacity 
+                style={styles.customConnectButton} 
+                onPress={handleConnect}
+              >
+                <Text style={styles.buttonText}>{locale.profile.connectWallet}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                  style={styles.customConnectButton2} 
+                  // onPress={handleConnect}
+                >
+                  <Text style={styles.buttonText}>{locale.profile.createAWallet}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+          
         ) : (
           <View style={styles.walletContainer}>
             <View style={styles.addressContainer}>
@@ -195,22 +215,36 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#121212',
   },
   scrollContent: {
+    flex: 0.9,
     padding: 16,
   },
+  entryTitle: {
+    color: '#ffffff',
+    fontSize: 24,
+    marginBottom: 20,
+  },
   title: {
+    color: '#ffffff',
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
   },
   subtitle: {
+    color: '#aaaaaa',
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
   },
+  connectWrapper:{
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+
   connectContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -220,8 +254,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#3498db',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 8,
+    borderRadius: 30,
+    width: '100%',
     marginBottom: 16,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  customConnectButton2: {
+    backgroundColor: 'grey',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 30,
+    width: '100%',
+    marginBottom: 16,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonText: {
     color: 'white',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { CryptoCurrency } from '../types/types';
+import { CryptoCurrency } from '../../types/types';
 
 const HeatmapItem = React.memo(({ coin, onPress }: { coin: CryptoCurrency; onPress?: () => void }) => {
   const getBgColor = () => {

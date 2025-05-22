@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { CryptoCurrency } from '../types/types';
+import { CryptoCurrency } from '../../types/types';
 import { Ionicons } from '@expo/vector-icons';
 
 const CoinItem = React.memo(({ coin, onPress }: { coin: CryptoCurrency; onPress?: () => void,  }) => {

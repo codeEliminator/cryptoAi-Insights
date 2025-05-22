@@ -4,10 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useLanguage } from '../mobx/LanguageStore/LanguageStore';
 import { CryptoCurrency } from '../types/types';
-import Heatmap from '../components/Heatmap';
-import TrendingCoins from '../components/TrendingCoins';
-import AiRecommendations from '../components/AiRecommendations';
-import Header from '../components/Header';
+import Heatmap from '../components/reusable-home-components/Heatmap';
+import TrendingCoins from '../components/reusable-home-components/TrendingCoins';
+import AiRecommendations from '../components/reusable-home-components/AiRecommendations';
+import Header from '../components/reusable-home-components/Header';
 import { useCryptoData } from '../hooks/useCryptoData';
 import { StatusBar } from 'expo-status-bar';
 import Loading from '../screens/Loading';
@@ -76,8 +76,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   footer: {
-    padding: 36,
+    padding: 16,
     alignItems: 'center',
+    marginBottom: 46,
   },
   footerText: {
     fontSize: 12,

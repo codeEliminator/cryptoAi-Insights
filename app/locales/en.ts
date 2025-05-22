@@ -70,7 +70,7 @@ export default {
     noResults: "No results found",
   },
   profile: {
-    connectWallet: "Connect Wallet",
+    connectWallet: "I already have a wallet",
     profile: "Profile",
     connectWalletMessage: "Connect your wallet to view your assets",
     walletAddress: "Wallet Address",
@@ -82,6 +82,14 @@ export default {
     loading: "Loading...",
     switchToEthereum: "Switch to Ethereum",
     switchToPolygon: "Switch to Polygon",
+    entryTitles: [
+      'Your all-in-one AI advisor for your crypto portfolio.',
+      'Unlock the power of over 100 blockchain networks.',
+      'Track the market in real time — no noise, just insights.',
+      'Get personalized signals and AI-powered recommendations.',
+      'Manage your assets quickly, securely, and without limits.'
+    ],
+    createAWallet: "Create a new wallet",
   },
   crypto: {
     about: "About",

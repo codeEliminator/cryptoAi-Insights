@@ -70,7 +70,7 @@ export default {
     noResults: "Aucun resultat",
   },
   profile: {
-    connectWallet: "Connectez votre portefeuille",
+    connectWallet: "J'ai déjà un portefeuille",
     profile: "Profil",
     connectWalletMessage: "Connectez votre portefeuille pour voir vos actifs",
     walletAddress: "Adresse du portefeuille",
@@ -82,7 +82,14 @@ export default {
     loading: "Chargement...",
     switchToEthereum: "Passer sur Ethereum",
     switchToPolygon: "Passer sur Polygon",
-
+    entryTitles: [
+      'Votre conseiller IA tout-en-un pour votre portefeuille crypto.',
+      'Exploitez la puissance de plus de 100 réseaux blockchain.',
+      'Suivez le marché en temps réel — sans distractions inutiles.',
+      'Recevez des signaux personnalisés et des recommandations par IA.',
+      'Gérez vos actifs rapidement, en toute sécurité et sans limites.'
+    ],    
+    createAWallet: "Créer un nouveau portefeuille",
   },
   crypto: {
     about: "À propos de",

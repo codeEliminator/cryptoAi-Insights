@@ -1,9 +1,9 @@
 import React, { memo, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { CryptoCurrency } from '../types/types';
+import { CryptoCurrency } from '../../types/types';
 import CoinItem from './CoinItem';
-import { useTrendingCoins } from "../hooks/useTrendingCoins";
-import { LocalizationData } from '../types/LocalizationData';
+import { useTrendingCoins } from "../../hooks/useTrendingCoins";
+import { LocalizationData } from '../../types/LocalizationData';
 
 const TrendingCoins = memo(({ cryptoData, locale, router }: { cryptoData: CryptoCurrency[], locale: LocalizationData, router: any }) => {
   const { gainers, losers } = useTrendingCoins(cryptoData);
@@ -15,14 +15,14 @@ const TrendingCoins = memo(({ cryptoData, locale, router }: { cryptoData: Crypto
       <View style={styles.trendingSection}>
         <Text style={styles.sectionTitle}>{locale.home.topGainers}</Text>
         {gainers.map(coin => (
-          <CoinItem key={coin.id} coin={coin} onPress={() => { router.push(`/crypto/${coin.id}` )}}/>
+          <CoinItem key={coin.id} coin={coin} onPress={() => { router.push(`/screens/crypto/${coin.id}` )}}/>
         ))}
       </View>
 
       <View style={styles.trendingSection}>
         <Text style={styles.sectionTitle}>{locale.home.topLosers}</Text>
         {losers.map(coin => (
-          <CoinItem key={coin.id} coin={coin} onPress={() => { router.push(`/crypto/${coin.id}` )}}/>
+          <CoinItem key={coin.id} coin={coin} onPress={() => { router.push(`/screens/crypto/${coin.id}` )}}/>
         ))}
       </View>
     </View>

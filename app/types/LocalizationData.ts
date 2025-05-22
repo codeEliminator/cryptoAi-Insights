@@ -82,6 +82,8 @@ export interface LocalizationData {
     loading: string;
     switchToEthereum: string;
     switchToPolygon: string;
+    createAWallet: string;
+    entryTitles: string[];
   };
   crypto: {
     about: string;

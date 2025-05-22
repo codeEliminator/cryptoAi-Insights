@@ -177,7 +177,7 @@ function MarketScreen() {
   const renderCoinItem = useCallback(({ item, index }: { item: CryptoCurrency, index: number }) => (
     <TouchableOpacity 
       style={styles.coinItem}
-      onPress={() => router.push(`/crypto/${item.id}`)}
+      onPress={() => router.push(`/screens/crypto/${item.id}`)}
     >
       <View style={styles.coinInfo}>
         <Text style={styles.coinRank}>{index + 1}</Text>

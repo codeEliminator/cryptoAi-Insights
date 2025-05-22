@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { memo, useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { LocalizationData } from '../types/LocalizationData';
+import { LocalizationData } from '../../types/LocalizationData';
 
 const Header = memo(({ marketTrend, locale, router, formattedDate }: { marketTrend: 'up' | 'down' | 'neutral', locale: LocalizationData, router: any, formattedDate: string }) => {
   const navigateToSettings = useCallback(() => {

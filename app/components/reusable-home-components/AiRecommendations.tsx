@@ -1,10 +1,10 @@
 import { useCallback, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { AIRecommendation } from '../types/types';
+import { AIRecommendation } from '../../types/types';
 import RecommendationCard from './RecommendationCard';
-import { useAiRecommendation } from '../hooks/useAiRecommendation';
-import { LocalizationData } from '../types/LocalizationData';
+import { useAiRecommendation } from '../../hooks/useAiRecommendation';
+import { LocalizationData } from '../../types/LocalizationData';
 
 const fallbackRecommendations: AIRecommendation[] = [
   {

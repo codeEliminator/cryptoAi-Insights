@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
-import { CryptoCurrency } from '../types/types';
+import { CryptoCurrency } from '../../types/types';
 import HeatmapItem from './HeatmapItem';
 import { router } from 'expo-router';
-import { LocalizationData } from '../types/LocalizationData';
+import { LocalizationData } from '../../types/LocalizationData';
 
 const { width } = Dimensions.get('window'); 
 

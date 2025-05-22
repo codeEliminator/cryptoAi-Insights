@@ -615,6 +615,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#333',
     backgroundColor: '#1a1a1a',
+    marginBottom: 20,
   },
   input: {
     flex: 1,
@@ -768,6 +769,7 @@ const styles = StyleSheet.create({
   footer: {
     padding: 16,
     alignItems: 'center',
+    marginBottom: 26,
   },
   footerText: {
     fontSize: 12,
