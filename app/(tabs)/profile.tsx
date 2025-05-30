@@ -1,7 +1,8 @@
 import "@walletconnect/react-native-compat";
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, StyleProp, ViewStyle, TextStyle, StatusBar } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, StyleProp, ViewStyle, TextStyle, StatusBar, Image } from 'react-native';
 import { observer } from "mobx-react-lite";
+import StylingCubes from "../components/reusable-profile-components/StylingCubes";
 import { 
   useAppKit, 
   useAppKitAccount,
@@ -107,7 +108,7 @@ const Profile: React.FC<ProfileProps> = observer(() => {
         <AppKit></AppKit>
         {!isConnected ? (
           <View style={styles.connectWrapper}>
-
+            
             <View style={styles.connectContainer}>
               <TypingText 
                 textArray={locale.profile.entryTitles}
@@ -221,6 +222,10 @@ const styles = StyleSheet.create({
     flex: 0.9,
     padding: 16,
   },
+  blockChainGif: {
+    width: '100%',
+    objectFit: 'contain',
+  },
   entryTitle: {
     color: '#ffffff',
     fontSize: 24,
@@ -242,7 +247,8 @@ const styles = StyleSheet.create({
   connectWrapper:{
     flex: 1,
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   connectContainer: {

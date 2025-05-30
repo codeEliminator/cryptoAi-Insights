@@ -51,6 +51,19 @@ CryptoAI Insights is an advanced cryptocurrency analytics platform that leverage
 
 *CryptoAI Insights mobile app showing the coin information*
 
+<img src='./assets/images/CRYPTOAI_INSIGHTS_AI_SCREEN.png>
+
+*CryptoAI Insights mobile app AI ChatBot*
+
+<img src='./assets/images/CRYPTOAI_INSIGHTS_AI_ANALYASIS_SCREEN.png>
+
+*CryptoAI Insights mobile app AI analysis per a request*
+
+## 🎥 Demo Video
+
+![Demo GIF](./assets/videos/PROFILE_SCREEN.gif)
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
