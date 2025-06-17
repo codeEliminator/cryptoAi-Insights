@@ -2,7 +2,11 @@ import "@walletconnect/react-native-compat";
 import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, StyleProp, ViewStyle, TextStyle, StatusBar, Image } from 'react-native';
 import { observer } from "mobx-react-lite";
-import StylingCubes from "../components/reusable-profile-components/StylingCubes";
+import LoginScreen from "../components/reusable-profile-components/LoginScreen";
+import ForceLoginScreen from "../components/reusable-profile-components/ForceLoginScreen";
+import TokenCard from "../components/reusable-profile-components/TokekCard";
+import getUniqueId from "../helpers/getUniqueId";
+import { mainnet, polygon, bsc, avalanche, arbitrum, optimism, fantom, base } from "../utils/chains/chains";
 import { 
   useAppKit, 
   useAppKitAccount,
@@ -16,7 +20,8 @@ import {
 } from "@reown/appkit-ethers-react-native";
 import Constants from 'expo-constants';
 import { useStore, useLanguageStore, useWalletStore } from '../mobx/MainStore';
-import TypingText from "../components/reusable-profile-components/TypingText";
+import formatNumber from "../helpers/formatNumber";
+
 interface ProfileProps {}
 const projectId = Constants.expoConfig?.extra?.PROJECT_ID;
 
@@ -32,23 +37,7 @@ const metadata = {
 
 const config = defaultConfig({ metadata });
 
-const mainnet = {
-  chainId: 1,
-  name: "Ethereum",
-  currency: "ETH",
-  explorerUrl: "https://etherscan.io",
-  rpcUrl: "https://cloudflare-eth.com",
-};
-
-const polygon = {
-  chainId: 137,
-  name: "Polygon",
-  currency: "MATIC",
-  explorerUrl: "https://polygonscan.com",
-  rpcUrl: "https://polygon-rpc.com",
-};
-
-const chains = [mainnet, polygon];
+const chains = [mainnet, polygon, bsc, avalanche, arbitrum, optimism, fantom, base];
 
 createAppKit({
   projectId,
@@ -58,7 +47,6 @@ createAppKit({
 });
 
 const Profile: React.FC<ProfileProps> = observer(() => {
-  const store = useStore();
   const { language, locale } = useLanguageStore();
   const [currentTitle, setCurrentTitle] = useState(0);
   const walletStore = useWalletStore();
@@ -83,12 +71,7 @@ const Profile: React.FC<ProfileProps> = observer(() => {
   useEffect(()=>{
     setTimeout(() => setCurrentTitle(currentTitle + 1 < locale.profile.entryTitles.length ? currentTitle + 1 : 0), 2000)
   })
-  
-  const formatNumber = (num: string | null): string => {
-    if (!num) return '0.0000';
-    return parseFloat(num).toFixed(4);
-  };
-  
+
   const handleConnect = (): void => {
     open({ view: 'Connect' });
   };
@@ -106,32 +89,8 @@ const Profile: React.FC<ProfileProps> = observer(() => {
       <StatusBar barStyle='light-content'></StatusBar>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <AppKit></AppKit>
-        {!isConnected ? (
-          <View style={styles.connectWrapper}>
-            
-            <View style={styles.connectContainer}>
-              <TypingText 
-                textArray={locale.profile.entryTitles}
-                style={styles.entryTitle}
-                typingSpeed={70}
-                delayBetweenTexts={500}
-                delayBeforeErasing={2000}
-              />
-              <TouchableOpacity 
-                style={styles.customConnectButton} 
-                onPress={handleConnect}
-              >
-                <Text style={styles.buttonText}>{locale.profile.connectWallet}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity 
-                  style={styles.customConnectButton2} 
-                  // onPress={handleConnect}
-                >
-                  <Text style={styles.buttonText}>{locale.profile.createAWallet}</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          
+        {!walletStore.isConnected ? (
+          <ForceLoginScreen walletStore={walletStore} />
         ) : (
           <View style={styles.walletContainer}>
             <View style={styles.addressContainer}>
@@ -174,7 +133,7 @@ const Profile: React.FC<ProfileProps> = observer(() => {
                   <Text style={styles.label}>{locale.profile.nativeBalance}</Text>
                   <Text style={styles.balance}>
                     {formatNumber(walletStore.balance)} 
-                    {chainId === 1 ? 'ETH' : chainId === 137 ? 'MATIC' : ''}
+                    {walletStore.getNetworkParams()?.currency}
                   </Text>
                 </View>
 
@@ -185,10 +144,7 @@ const Profile: React.FC<ProfileProps> = observer(() => {
                     <Text style={styles.noTokens}>{locale.profile.noTokensFound}</Text>
                   ) : (
                     walletStore.tokens.map((token, index) => (
-                      <View key={index} style={styles.tokenItem}>
-                        <Text style={styles.tokenName}>{token.name} ({token.symbol})</Text>
-                        <Text style={styles.tokenBalance}>{formatNumber(token.balance)}</Text>
-                      </View>
+                      <TokenCard key={getUniqueId()} token={token} index={index} />
                     ))
                   )}
                 </View>
@@ -226,11 +182,6 @@ const styles = StyleSheet.create({
     width: '100%',
     objectFit: 'contain',
   },
-  entryTitle: {
-    color: '#ffffff',
-    fontSize: 24,
-    marginBottom: 20,
-  },
   title: {
     color: '#ffffff',
     fontSize: 24,
@@ -243,45 +194,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
-  },
-  connectWrapper:{
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  connectContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  customConnectButton: {
-    backgroundColor: '#3498db',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 30,
-    width: '100%',
-    marginBottom: 16,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  customConnectButton2: {
-    backgroundColor: 'grey',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 30,
-    width: '100%',
-    marginBottom: 16,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   walletContainer: {
     backgroundColor: 'white',
@@ -354,22 +266,7 @@ const styles = StyleSheet.create({
   tokensContainer: {
     marginBottom: 16,
   },
-  tokenItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 12,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-    marginBottom: 8,
-  },
-  tokenName: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  tokenBalance: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+
   noTokens: {
     fontStyle: 'italic',
     textAlign: 'center',

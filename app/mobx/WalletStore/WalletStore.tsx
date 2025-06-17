@@ -15,6 +15,7 @@ interface TokenInfo {
 interface NetworkParams {
   chainName: string;
   explorer: string;
+  currency: string;
 }
 
 interface TokenResponse {
@@ -60,7 +61,6 @@ class WalletStore {
   isLoading: boolean = false;
   error: string | null = null;
   walletInfo: Record<string, any> | null = null;
-  
   walletProvider: any = null;
   
   constructor() {
@@ -92,7 +92,37 @@ class WalletStore {
   setProvider(provider: any): void {
     this.walletProvider = provider;
   }
-
+  forceLogin(): void {
+    runInAction(() => {
+      this.address = "0xFAKEADDRESS1234567890ABCDEFabcdef1234567890";
+      this.chainId = 1; 
+      this.isConnected = true;
+      this.walletInfo = {
+        name: "Fake Wallet",
+        icon: null,
+      };
+      this.balance = "12.3456";
+      this.tokens = [
+        {
+          address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+          name: "Tether USD",
+          symbol: "USDT",
+          balance: "123.45",
+          decimals: 6,
+        },
+        {
+          address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          name: "USD Coin",
+          symbol: "USDC",
+          balance: "67.89",
+          decimals: 6,
+        },
+      ];
+      this.error = null;
+      this.isLoading = false;
+    });
+  }
+  
   async fetchBalance(): Promise<void> {
     if (!this.address || !this.chainId || !this.walletProvider) return;
 
@@ -182,13 +212,13 @@ class WalletStore {
   
   getNetworkParams(): NetworkParams | undefined {
     const networkMapping: Record<number, NetworkParams> = {
-      1: { chainName: 'eth', explorer: 'https://etherscan.io' },
-      137: { chainName: 'polygon', explorer: 'https://polygonscan.com' },
-      56: { chainName: 'bsc', explorer: 'https://bscscan.com' },
-      43114: { chainName: 'avalanche', explorer: 'https://snowtrace.io' },
-      42161: { chainName: 'arbitrum', explorer: 'https://arbiscan.io' },
-      10: { chainName: 'optimism', explorer: 'https://optimistic.etherscan.io' },
-      250: { chainName: 'fantom', explorer: 'https://ftmscan.com' },
+      1: { chainName: 'eth', explorer: 'https://etherscan.io', currency: 'ETH' },
+      137: { chainName: 'polygon', explorer: 'https://polygonscan.com', currency: 'MATIC' },
+      56: { chainName: 'bsc', explorer: 'https://bscscan.com', currency: 'BNB' },
+      43114: { chainName: 'avalanche', explorer: 'https://snowtrace.io', currency: 'AVAX' },
+      42161: { chainName: 'arbitrum', explorer: 'https://arbiscan.io', currency: 'ARB' },
+      10: { chainName: 'optimism', explorer: 'https://optimistic.etherscan.io', currency: 'OP' },
+      250: { chainName: 'fantom', explorer: 'https://ftmscan.com', currency: 'FTM' },
     };
     
     return this.chainId !== null ? networkMapping[this.chainId] : undefined;

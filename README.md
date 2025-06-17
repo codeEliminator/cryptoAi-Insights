@@ -1,6 +1,5 @@
 # CryptoAI Insights
 
-
 ## 📊 Overview
 
 CryptoAI Insights is an advanced cryptocurrency analytics platform that leverages artificial intelligence to provide price predictions, sentiment analysis, and personalized trading recommendations. Our application combines cutting-edge machine learning models with comprehensive market data to help traders make more informed decisions.
@@ -16,18 +15,21 @@ CryptoAI Insights is an advanced cryptocurrency analytics platform that leverage
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - React Native with Atomic Design pattern
-- Redux Toolkit for state management
+- Mobx for state management
 - React Query for data fetching
 - Styled Components for UI styling
 
 ### Backend
+
 - Python (FastAPI/Django REST)
 - Microservice architecture
 - JWT authentication
 - GraphQL and REST API interfaces
 
 ### Data & AI
+
 - MongoDB for user data
 - TimescaleDB for time series data
 - Redis for caching
@@ -35,6 +37,7 @@ CryptoAI Insights is an advanced cryptocurrency analytics platform that leverage
 - NLP with BERT/RoBERTa for sentiment analysis
 
 ### Infrastructure
+
 - Docker containers
 - Kubernetes orchestration
 - CI/CD through GitHub Actions
@@ -42,35 +45,32 @@ CryptoAI Insights is an advanced cryptocurrency analytics platform that leverage
 
 ## 📱 Application Screenshots
 
-<img src="./assets/images/cryptoai-heatmap-screenshot.png" alt="CryptoAI Market Heatmap" width="300"/>
+![CryptoAI Market Heatmap](./assets/images/cryptoai-heatmap-screenshot.png)
 
+CryptoAI Insights mobile app showing the market heatmap and top gainers
 
-*CryptoAI Insights mobile app showing the market heatmap and top gainers*
+![CryptoAI Coin Screen](./assets/images/cryptoai-coin-screen.png)
 
-<img src="./assets/images/cryptoai-coin-screen.png" alt="CryptoAI Coin Screen" width="300"/>
+CryptoAI Insights mobile app showing the coin information
 
-*CryptoAI Insights mobile app showing the coin information*
+![CryptoAI Ai Screen](./assets/images/CRYPTOAI_INSIGHTS_AI_SCREEN.png)
 
-<img src='./assets/images/CRYPTOAI_INSIGHTS_AI_SCREEN.png'  alt="CryptoAI Ai Screen" width="300">
+CryptoAI Insights mobile app AI ChatBot
 
-*CryptoAI Insights mobile app AI ChatBot*
+![CryptoAI Ai Screen](./assets/images/CRYPTOAI_INSIGHTS_AI_ANALYASIS_SCREEN.png)
 
-<img src='./assets/images/CRYPTOAI_INSIGHTS_AI_ANALYASIS_SCREEN.png'  alt="CryptoAI Ai Screen" width="300">
-
-*CryptoAI Insights mobile app AI analysis per a request*
+CryptoAI Insights mobile app AI analysis per a request
 
 ## 🎥 Demo Video
 
-<img src="./assets/videos/PROFILE_SCREEN.gif" width="300" alt="Demo GIF" />
+![Demo GIF](./assets/videos/PROFILE_SCREEN.gif)
 
-*CryptoAI Insights mobile app Profile screen animation*
-
-
-
+CryptoAI Insights mobile app Profile screen animation
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 16+
 - Python 3.8+
 - Docker and Docker Compose
@@ -85,17 +85,15 @@ git clone https://github.com/codeEliminator/cryptoai-insights.git
 cd cryptoai-insights
 
 # Install frontend dependencies
-cd frontend
 npm install
 
 # Install backend dependencies
-cd ../backend
+cd ../backend *incoming*
 pip install -r requirements.txt
 
 # Start the development environment
 docker-compose up -d
 ```
-
 
 ## 📋 Project Roadmap
 
@@ -105,7 +103,6 @@ docker-compose up -d
 - **Phase 4**: Performance optimization, expanded documentation
 
 ## 💡 Contributing
-
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)

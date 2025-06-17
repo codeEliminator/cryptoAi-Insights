@@ -11,10 +11,11 @@ export interface TokenInfo {
 export interface NetworkParams {
   chainName: string;
   explorer: string;
+  currency: string;
 }
 
 export interface TokenResponse {
-  token_address: string;
+  token_address: string
   name?: string;
   symbol?: string;
   balance?: string;
@@ -39,7 +40,7 @@ export interface WalletStore {
     isConnected: boolean, 
     walletInfo: Record<string, any> | null
   ): void;
-  
+  forceLogin(): void;
   setProvider(provider: any): void;
   fetchBalance(): Promise<void>;
   fetchTokens(): Promise<void>;
