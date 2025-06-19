@@ -1,0 +1,52 @@
+module.exports = {
+  root: true,
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:react-native/all',
+    'prettier',
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'react', 'react-native', 'prettier'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    project: './tsconfig.json',
+  },
+  env: {
+    'react-native/react-native': true,
+    jest: true,
+  },
+  rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
+    'prettier/prettier': 'warn',
+    'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/display-name': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/jsx-uses-vars': 'warn',
+    'react/jsx-no-undef': 'error',
+    'react/jsx-no-duplicate-props': 'error',
+    'react/jsx-key': 'warn',
+    'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
+    'react-native/no-inline-styles': 'warn',
+    'react-native/no-color-literals': 'warn',
+    'react-native/no-raw-text': 'off',
+    'react-native/no-single-element-style-arrays': 'warn',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'warn',
+    '@typescript-eslint/no-empty-interface': 'warn',
+    '@typescript-eslint/ban-ts-comment': 'warn',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+};

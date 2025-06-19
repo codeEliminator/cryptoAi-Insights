@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useLanguage } from '../mobx/LanguageStore/LanguageStore';
@@ -13,6 +21,7 @@ import { StatusBar } from 'expo-status-bar';
 import Loading from '../screens/Loading';
 import { fakeData } from '../helpers/fakeData';
 import { observer } from 'mobx-react-lite';
+import Footer from '../components/Footer';
 
 const HomeScreen = () => {
   const router = useRouter();
@@ -23,7 +32,14 @@ const HomeScreen = () => {
   const [marketTrend, setMarketTrend] = useState<'up' | 'down' | 'neutral'>('neutral');
   const { locale, language } = useLanguage();
 
-  const { formattedDate, fetchCryptoData } = useCryptoData(setCryptoData, setMarketTrend, setLoading, setRefreshing, page, refreshing);
+  const { formattedDate, fetchCryptoData } = useCryptoData(
+    setCryptoData,
+    setMarketTrend,
+    setLoading,
+    setRefreshing,
+    page,
+    refreshing
+  );
 
   // useEffect(() => {
   //   // fetchCryptoData();
@@ -35,34 +51,36 @@ const HomeScreen = () => {
   }, [fetchCryptoData]);
 
   if (loading && !refreshing) {
-    return <Loading locale={locale} />
+    return <Loading locale={locale} />;
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header formattedDate={formattedDate} marketTrend={marketTrend} locale={locale} router={router}/>
-      <ScrollView 
+      <Header
+        formattedDate={formattedDate}
+        marketTrend={marketTrend}
+        locale={locale}
+        router={router}
+      />
+      <ScrollView
         style={styles.scrollView}
         refreshControl={
-          <RefreshControl 
-            refreshing={refreshing} 
-            colors={["#3498db"]}
+          <RefreshControl
+            refreshing={refreshing}
+            colors={['#3498db']}
             tintColor="#ffffff"
             onRefresh={onRefresh}
           />
         }
       >
         <Heatmap cryptoData={cryptoData} locale={locale} />
-        <TrendingCoins cryptoData={cryptoData} locale={locale} router={router}/>
-        <AiRecommendations locale={locale} router={router} language={language}/>
-
+        <TrendingCoins cryptoData={cryptoData} locale={locale} router={router} />
+        <AiRecommendations locale={locale} router={router} language={language} />
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            Powered by Crypto Insights • {locale.common.refreshed} {new Date().toLocaleTimeString(language + '-' + language.toUpperCase(), { hour12: false })}
-          </Text>
+          <Footer locale={locale} language={language} />
         </View>
       </ScrollView>
-      <StatusBar style='light' />
+      <StatusBar style="light" />
     </SafeAreaView>
   );
 };
@@ -76,13 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   footer: {
-    padding: 16,
-    alignItems: 'center',
-    marginBottom: 46,
-  },
-  footerText: {
-    fontSize: 12,
-    color: '#666666',
+    marginBottom: 20,
   },
 });
 
