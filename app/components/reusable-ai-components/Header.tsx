@@ -1,31 +1,33 @@
-import { TouchableOpacity, StyleSheet, View, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { LocalizationData } from "@/app/types/LocalizationData";
+import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { LocalizationData } from '@/app/types/LocalizationData';
 
 type AiTab = 'chat' | 'analysis';
 
-
-const Header = ({ clearChatHistory, locale, activeTab, error, }: { clearChatHistory: () => void, locale: LocalizationData, activeTab: AiTab, error: any }) => {
-    return (
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>{locale.ai.title}</Text>
-        <View style={styles.headerActions}>
-          {activeTab === 'chat' && (
-                    <TouchableOpacity 
-                    style={styles.headerButton}
-                    onPress={clearChatHistory}
-                >
-                    <Ionicons name="trash-outline" size={22} color="#3498db" />
-              </TouchableOpacity>
-          )}
-          {error && (
-            <View style={styles.errorIndicator}>
-              <Ionicons name="alert-circle" size={22} color="#FF5722" />
-            </View>
-          )}
-        </View>
+interface HeaderProps {
+  clearChatHistory: () => void;
+  locale: LocalizationData;
+  activeTab: AiTab;
+  error: any;
+}
+const Header = ({ clearChatHistory, locale, activeTab, error }: HeaderProps) => {
+  return (
+    <View style={styles.header}>
+      <Text style={styles.headerTitle}>{locale.ai.title}</Text>
+      <View style={styles.headerActions}>
+        {activeTab === 'chat' && (
+          <TouchableOpacity style={styles.headerButton} onPress={clearChatHistory}>
+            <Ionicons name="trash-outline" size={22} color="#3498db" />
+          </TouchableOpacity>
+        )}
+        {error && (
+          <View style={styles.errorIndicator}>
+            <Ionicons name="alert-circle" size={22} color="#FF5722" />
+          </View>
+        )}
       </View>
-    );
+    </View>
+  );
 };
 
 export default Header;

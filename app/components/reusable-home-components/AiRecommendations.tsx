@@ -12,25 +12,33 @@ const fallbackRecommendations: AIRecommendation[] = [
     coinName: 'Bitcoin',
     confidence: 0,
     reason: 'N/A',
-    action: 'N/A'
+    action: 'N/A',
   },
   {
     coinId: 'ethereum',
     coinName: 'Ethereum',
     confidence: 0,
     reason: 'N/A',
-    action: 'N/A'
+    action: 'N/A',
   },
   {
     coinId: 'solana',
     coinName: 'Solana',
     confidence: 0,
     reason: 'N/A',
-    action: 'N/A'
-  }
+    action: 'N/A',
+  },
 ];
 
-const AiRecommendations = ({ router, locale, language }: { router: any, locale: LocalizationData, language: string }) => {
+const AiRecommendations = ({
+  router,
+  locale,
+  language,
+}: {
+  router: any;
+  locale: LocalizationData;
+  language: string;
+}) => {
   const { recommendations, loading, error, fetchRecommendations } = useAiRecommendation(language);
   const [aiData, setAiData] = useState<AIRecommendation[]>(fallbackRecommendations);
 
@@ -42,7 +50,7 @@ const AiRecommendations = ({ router, locale, language }: { router: any, locale: 
     const getRecommendations = async () => {
       await fetchRecommendations();
     };
-    // getRecommendations();
+    getRecommendations();
   }, [fetchRecommendations]);
 
   useEffect(() => {
@@ -57,8 +65,8 @@ const AiRecommendations = ({ router, locale, language }: { router: any, locale: 
         <Text style={styles.sectionTitle}>{locale.home.aiRecommendations}</Text>
         <Ionicons name="flash" size={20} color="#FFD700" />
 
-        <TouchableOpacity 
-          style={styles.refreshButton} 
+        <TouchableOpacity
+          style={styles.refreshButton}
           disabled={loading}
           onPress={fetchRecommendations}
         >
@@ -69,22 +77,19 @@ const AiRecommendations = ({ router, locale, language }: { router: any, locale: 
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#3498db" />
-          <Text style={styles.loadingText}>{locale.common?.loading || 'Loading recommendations...'}</Text>
+          <Text style={styles.loadingText}>{locale.common.loading}</Text>
         </View>
       ) : (
         <>
           {aiData.map(recommendation => (
-            <RecommendationCard 
-              key={recommendation.coinId} 
+            <RecommendationCard
+              key={recommendation.coinId}
               recommendation={recommendation}
               onPress={() => router.push(`screens/crypto/${recommendation.coinId}`)}
             />
           ))}
 
-          <TouchableOpacity 
-            style={styles.viewMoreButton}
-            onPress={navigateToAI}
-          >
+          <TouchableOpacity style={styles.viewMoreButton} onPress={navigateToAI}>
             <Text style={styles.viewMoreText}>{locale.home.viewMore}</Text>
             <Ionicons name="arrow-forward" size={16} color="#3498db" />
           </TouchableOpacity>

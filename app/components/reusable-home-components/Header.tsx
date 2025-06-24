@@ -3,14 +3,28 @@ import { memo, useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { LocalizationData } from '../../types/LocalizationData';
 
-const Header = memo(({ marketTrend, locale, router, formattedDate }: { marketTrend: 'up' | 'down' | 'neutral', locale: LocalizationData, router: any, formattedDate: string }) => {
+interface HeaderProps {
+  marketTrend: 'up' | 'down' | 'neutral';
+  locale: LocalizationData;
+  router: any;
+  formattedDate: string;
+}
+
+const Header = memo(({ marketTrend, locale, router, formattedDate }: HeaderProps) => {
   const navigateToSettings = useCallback(() => {
     router.navigate('/screens/Settings');
   }, [router]);
 
-  const trendColor = marketTrend === 'up' ? '#4CAF50' : marketTrend === 'down' ? '#FF6B6B' : '#FFD700';
-  const trendText = marketTrend === 'up' ? locale.home.marketUp : marketTrend === 'down' ? locale.home.marketDown : locale.home.marketStable;
-  const trendIcon = marketTrend === 'up' ? 'trending-up' : marketTrend === 'down' ? 'trending-down' : 'remove';
+  const trendColor =
+    marketTrend === 'up' ? '#4CAF50' : marketTrend === 'down' ? '#FF6B6B' : '#FFD700';
+  const trendText =
+    marketTrend === 'up'
+      ? locale.home.marketUp
+      : marketTrend === 'down'
+        ? locale.home.marketDown
+        : locale.home.marketStable;
+  const trendIcon =
+    marketTrend === 'up' ? 'trending-up' : marketTrend === 'down' ? 'trending-down' : 'remove';
 
   return (
     <View style={styles.header}>
@@ -23,7 +37,7 @@ const Header = memo(({ marketTrend, locale, router, formattedDate }: { marketTre
         <Ionicons name={trendIcon} size={18} color={trendColor} />
       </View>
       <TouchableOpacity onPress={navigateToSettings} style={styles.settingsButton}>
-        <Ionicons name='cog-outline' size={24} color='white' />
+        <Ionicons name="cog-outline" size={24} color="white" />
       </TouchableOpacity>
     </View>
   );
@@ -61,7 +75,7 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     padding: 10,
-  }
+  },
 });
 
 export default Header;

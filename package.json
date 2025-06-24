@@ -53,6 +53,7 @@
     "fast-text-encoding": "^1.0.6",
     "i18next": "^24.2.3",
     "ionicons": "^7.4.0",
+    "lodash.debounce": "^4.0.8",
     "mobx": "^6.13.6",
     "mobx-react-lite": "^4.1.0",
     "moti": "^0.30.0",
@@ -77,6 +78,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.12",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react": "~18.3.12",
     "@types/react-native": "^0.72.8",
     "@types/react-test-renderer": "^18.3.0",

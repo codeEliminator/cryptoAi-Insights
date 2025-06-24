@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Message } from '@/app/(tabs)/ai';
 import { LocalizationData } from '@/app/types/LocalizationData';
 import { MarketAnalysis } from '@/app/(tabs)/ai';
-import { GEMINI_API_KEY } from '@/app/configs/AppConfig';
 import { ANALYSIS_PROMPT, SYSTEM_PROMPT } from '@/app/services/Prompts';
 import useGemini from '@/app/hooks/useGemini';
 
@@ -92,10 +91,6 @@ export class AiService {
 
   public static async requestMarketAnalysis(props: AiMarketAnalysisProps): Promise<void> {
     const { setError, setLoading, setAnalysisData, language } = props;
-    if (!GEMINI_API_KEY) {
-      setError('API ключ не настроен');
-      return;
-    }
     setLoading(true);
     setError('');
     try {
@@ -159,10 +154,6 @@ export class AiService {
     }
 
     try {
-      if (!GEMINI_API_KEY) {
-        throw new Error('API ключ не настроен');
-      }
-
       const recentMessages = [...updatedMessages.slice(-10)]
         .map(msg => (msg.isUser ? `Пользователь: ${msg.text}` : `AI: ${msg.text}`))
         .join('\n');

@@ -1,10 +1,17 @@
-import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, FlatList, StyleSheet } from "react-native";
-import { Message } from "@/app/(tabs)/ai";
-import { LocalizationData } from "@/app/types/LocalizationData";
-import { AiService } from "@/app/utils/ai/aiService";
-import { Ionicons } from "@expo/vector-icons";
-import { useRef } from "react";
-import renderMessageItem from "../helpers/renderMessageItem";
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  FlatList,
+  StyleSheet,
+} from 'react-native';
+import { Message } from '@/app/(tabs)/ai';
+import { LocalizationData } from '@/app/types/LocalizationData';
+import { AiService } from '@/app/utils/ai/aiService';
+import { Ionicons } from '@expo/vector-icons';
+import renderMessageItem from '../helpers/renderMessageItem';
 
 interface ChatProps {
   messages: Message[];
@@ -16,16 +23,26 @@ interface ChatProps {
   setMessages: (messages: Message[]) => void;
   language: string;
   loading: boolean;
+  flatListRef: React.RefObject<FlatList>;
 }
 
-const Chat = ({ messages, inputText, setInputText, locale, setError, setLoading, setMessages, language, loading }: ChatProps) => {
-  const flatListRef = useRef<FlatList>(null);
-
+const Chat = ({
+  messages,
+  inputText,
+  setInputText,
+  locale,
+  setError,
+  setLoading,
+  setMessages,
+  language,
+  loading,
+  flatListRef,
+}: ChatProps) => {
   return (
     <KeyboardAvoidingView
       style={styles.chatContainer}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={-100}
+      keyboardVerticalOffset={-20}
     >
       <FlatList
         ref={flatListRef}
@@ -35,7 +52,7 @@ const Chat = ({ messages, inputText, setInputText, locale, setError, setLoading,
         style={styles.messageList}
         contentContainerStyle={styles.messageListContent}
       />
-    
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -46,21 +63,33 @@ const Chat = ({ messages, inputText, setInputText, locale, setError, setLoading,
           multiline
           maxLength={500}
         />
-        <TouchableOpacity 
-          style={[styles.sendButton, (!inputText.trim() || loading) && styles.disabledButton]} 
-          onPress={() => AiService.sendMessage({ inputText, setError, setLoading, setMessages, language, loading, setInputText, messages, locale })}
+        <TouchableOpacity
+          style={[styles.sendButton, (!inputText.trim() || loading) && styles.disabledButton]}
+          onPress={() =>
+            AiService.sendMessage({
+              inputText,
+              setError,
+              setLoading,
+              setMessages,
+              language,
+              loading,
+              setInputText,
+              messages,
+              locale,
+            })
+          }
           disabled={!inputText.trim() || loading}
         >
-        {loading ? (
-          <Ionicons name="ellipsis-horizontal" size={18} color="#fff" />
-        ) : (
-          <Ionicons name="send" size={18} color="#fff" />
-        )}
-      </TouchableOpacity>
-    </View>
-  </KeyboardAvoidingView>
-  )
-}
+          {loading ? (
+            <Ionicons name="ellipsis-horizontal" size={18} color="#fff" />
+          ) : (
+            <Ionicons name="send" size={18} color="#fff" />
+          )}
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
+  );
+};
 
 export default Chat;
 
@@ -109,4 +138,4 @@ const styles = StyleSheet.create({
   disabledButton: {
     backgroundColor: '#1f5a8a',
   },
-})
+});
