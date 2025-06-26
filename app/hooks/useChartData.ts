@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import useLocalizedDays from "../helpers/getLocalizedDays";
-import useLocalizedMonths from "../helpers/getLocalizedMonths";
-import axios from "axios";
+import { useCallback } from 'react';
+import useLocalizedDays from '../helpers/getLocalizedDays';
+import useLocalizedMonths from '../helpers/getLocalizedMonths';
+import axios from 'axios';
 
 interface ChartData {
   labels: string[];
@@ -25,14 +25,14 @@ const formatChartData = (
 ): ChartData => {
   const maxLabels = 10;
   const step = Math.ceil(prices.length / maxLabels);
-  
+
   const priceData = prices.map(([_, price]) => price);
   const labels: string[] = [];
-  
+
   for (let i = 0; i < prices.length && labels.length < maxLabels; i += step) {
     const timestamp = prices[i][0];
     const date = new Date(timestamp);
-    
+
     let label = '';
     if (timeframe === '1') {
       label = `${date.getHours()}:00`;
@@ -43,25 +43,24 @@ const formatChartData = (
     } else {
       label = localizedMonths[date.getMonth()];
     }
-    
+
     labels.push(label);
   }
-  
+
   const resampledData: number[] = [];
-  
+
   for (let i = 0; i < labels.length; i++) {
     const startIdx = i * step;
     if (startIdx < priceData.length) {
       resampledData.push(priceData[startIdx]);
     }
   }
-  
+
   return {
     labels,
-    datasets: [{ data: resampledData }]
+    datasets: [{ data: resampledData }],
   };
 };
-
 
 const useChartData = ({
   setLoading,
@@ -71,7 +70,6 @@ const useChartData = ({
   timeframe,
   FakeCoinChartData,
 }: ChartDataProps) => {
-  
   const localizedDays = useLocalizedDays();
   const localizedMonths = useLocalizedMonths();
 
@@ -80,25 +78,26 @@ const useChartData = ({
     setError(null);
 
     try {
-      
-      // const response = await axios.get(
-      //   `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${timeframe}`
-      // );
-      // const prices: [number, number][] = response.data.prices;
-      
-      const prices = FakeCoinChartData.prices;
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${timeframe}`
+      );
+      const prices: [number, number][] = response.data.prices;
+
+      // const prices = FakeCoinChartData.prices;
       if (!prices || prices.length === 0) {
         throw new Error('Нет данных о ценах');
       }
 
       const chartData = formatChartData(prices, timeframe, localizedDays, localizedMonths);
-      
+
       setChartData(chartData);
     } catch (err) {
       console.error('Ошибка при загрузке данных графика:', err);
-      setError(err instanceof Error 
-        ? `Не удалось загрузить данные: ${err.message}` 
-        : 'Не удалось загрузить данные для графика');
+      setError(
+        err instanceof Error
+          ? `Не удалось загрузить данные: ${err.message}`
+          : 'Не удалось загрузить данные для графика'
+      );
     } finally {
       setLoading(false);
     }

@@ -1,14 +1,36 @@
-import "@walletconnect/react-native-compat";
+import '@walletconnect/react-native-compat';
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, StyleProp, ViewStyle, TextStyle, StatusBar, Image } from 'react-native';
-import { observer } from "mobx-react-lite";
-import LoginScreen from "../components/reusable-profile-components/LoginScreen";
-import ForceLoginScreen from "../components/reusable-profile-components/ForceLoginScreen";
-import TokenCard from "../components/reusable-profile-components/TokekCard";
-import getUniqueId from "../helpers/getUniqueId";
-import { mainnet, polygon, bsc, avalanche, arbitrum, optimism, fantom, base } from "../utils/chains/chains";
-import { 
-  useAppKit, 
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+  StatusBar,
+  Image,
+} from 'react-native';
+import { observer } from 'mobx-react-lite';
+import LoginScreen from '../components/reusable-profile-components/LoginScreen';
+import ForceLoginScreen from '../components/reusable-profile-components/ForceLoginScreen';
+import TokenCard from '../components/reusable-profile-components/TokekCard';
+import getUniqueId from '../helpers/getUniqueId';
+import {
+  mainnet,
+  polygon,
+  bsc,
+  avalanche,
+  arbitrum,
+  optimism,
+  fantom,
+  base,
+} from '../utils/chains/chains';
+import {
+  useAppKit,
   useAppKitAccount,
   useWalletInfo,
   useAppKitProvider,
@@ -16,22 +38,22 @@ import {
   createAppKit,
   defaultConfig,
   AppKit,
-  useDisconnect
-} from "@reown/appkit-ethers-react-native";
+  useDisconnect,
+} from '@reown/appkit-ethers-react-native';
 import Constants from 'expo-constants';
-import { useStore, useLanguageStore, useWalletStore } from '../mobx/MainStore';
-import formatNumber from "../helpers/formatNumber";
+import { useLanguageStore, useWalletStore } from '../mobx/MainStore';
+import formatNumber from '../helpers/formatNumber';
 
 interface ProfileProps {}
 const projectId = Constants.expoConfig?.extra?.PROJECT_ID;
 
 const metadata = {
-  name: "CryptoAi Insights", 
-  description: "AI-powered crypto analytics and insights",
-  url: "https://reown.com/appkit", 
-  icons: ["https://imgur.com/a/qvUyFQZ"],
+  name: 'CryptoAi Insights',
+  description: 'AI-powered crypto analytics and insights',
+  url: 'https://reown.com/appkit',
+  icons: ['https://imgur.com/a/qvUyFQZ'],
   redirect: {
-    native: "cryptoaiinsights://", 
+    native: 'cryptoaiinsights://',
   },
 };
 
@@ -43,7 +65,7 @@ createAppKit({
   projectId,
   chains,
   config,
-  enableAnalytics: true, 
+  enableAnalytics: true,
 });
 
 const Profile: React.FC<ProfileProps> = observer(() => {
@@ -51,42 +73,52 @@ const Profile: React.FC<ProfileProps> = observer(() => {
   const [currentTitle, setCurrentTitle] = useState(0);
   const walletStore = useWalletStore();
   const { open, close } = useAppKit();
-  const {disconnect} = useDisconnect()
+  const { disconnect } = useDisconnect();
   const { address, chainId, isConnected } = useAppKitAccount();
   const { walletInfo } = useWalletInfo();
   const { walletProvider } = useAppKitProvider();
   const { selectedNetworkId } = useAppKitState();
-  
-  
+
   useEffect(() => {
-    walletStore.setWalletState(address, chainId as number, isConnected, walletInfo as Record<string, any> );
+    walletStore.setWalletState(
+      address,
+      chainId as number,
+      isConnected,
+      walletInfo as Record<string, any>
+    );
   }, [address, chainId, isConnected, walletInfo]);
-  
+
   useEffect(() => {
     if (walletProvider) {
       walletStore.setProvider(walletProvider);
     }
   }, [walletProvider]);
 
-  useEffect(()=>{
-    setTimeout(() => setCurrentTitle(currentTitle + 1 < locale.profile.entryTitles.length ? currentTitle + 1 : 0), 2000)
-  })
+  useEffect(() => {
+    setTimeout(
+      () =>
+        setCurrentTitle(
+          currentTitle + 1 < locale.profile.entryTitles.length ? currentTitle + 1 : 0
+        ),
+      2000
+    );
+  });
 
   const handleConnect = (): void => {
     open({ view: 'Connect' });
   };
-  
+
   const handleDisconnect = () => {
-    disconnect()
+    disconnect();
   };
-  
+
   const handleSwitchNetwork = (): void => {
     open({ view: 'Networks' });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='light-content'></StatusBar>
+      <StatusBar barStyle="light-content"></StatusBar>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <AppKit></AppKit>
         {!walletStore.isConnected ? (
@@ -99,12 +131,10 @@ const Profile: React.FC<ProfileProps> = observer(() => {
                 {address?.substring(0, 6)}...
                 {address?.substring(address.length - 4)}
               </Text>
-              
+
               {walletInfo && (
                 <View style={styles.walletInfoContainer}>
-                  <Text style={styles.walletName}>
-                    {walletInfo.name || 'Wallet'}
-                  </Text>
+                  <Text style={styles.walletName}>{walletInfo.name || 'Wallet'}</Text>
                 </View>
               )}
             </View>
@@ -112,13 +142,11 @@ const Profile: React.FC<ProfileProps> = observer(() => {
             <View style={styles.networkContainer}>
               <Text style={styles.label}>{locale.profile.network}</Text>
               <Text style={styles.networkName}>
-                {chainId === 1 ? 'Ethereum' : 
-                 chainId === 137 ? 'Polygon' : 
-                 `Chain ID: ${chainId}`}
+                {chainId === 1 ? 'Ethereum' : chainId === 137 ? 'Polygon' : `Chain ID: ${chainId}`}
               </Text>
-              
-              <TouchableOpacity 
-                style={styles.switchNetworkButton} 
+
+              <TouchableOpacity
+                style={styles.switchNetworkButton}
                 onPress={() => handleSwitchNetwork()}
               >
                 <Text style={styles.switchNetworkText}>{locale.profile.switchToEthereum}</Text>
@@ -132,14 +160,14 @@ const Profile: React.FC<ProfileProps> = observer(() => {
                 <View style={styles.balanceContainer}>
                   <Text style={styles.label}>{locale.profile.nativeBalance}</Text>
                   <Text style={styles.balance}>
-                    {formatNumber(walletStore.balance)} 
+                    {formatNumber(walletStore.balance)}
                     {walletStore.getNetworkParams()?.currency}
                   </Text>
                 </View>
 
                 <View style={styles.tokensContainer}>
                   <Text style={styles.label}>{locale.profile.nativeBalance}</Text>
-                  
+
                   {walletStore.tokens.length === 0 ? (
                     <Text style={styles.noTokens}>{locale.profile.noTokensFound}</Text>
                   ) : (
@@ -151,18 +179,13 @@ const Profile: React.FC<ProfileProps> = observer(() => {
               </>
             )}
 
-            <TouchableOpacity 
-              style={styles.disconnectButton} 
-              onPress={handleDisconnect}
-            >
+            <TouchableOpacity style={styles.disconnectButton} onPress={handleDisconnect}>
               <Text style={styles.disconnectText}>{locale.profile.disconnectWallet}</Text>
             </TouchableOpacity>
           </View>
         )}
-        
-        {walletStore.error && (
-          <Text style={styles.errorText}>{walletStore.error}</Text>
-        )}
+
+        {walletStore.error && <Text style={styles.errorText}>{walletStore.error}</Text>}
       </ScrollView>
     </SafeAreaView>
   );
@@ -294,4 +317,3 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 });
-

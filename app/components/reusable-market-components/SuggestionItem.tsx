@@ -3,9 +3,9 @@ import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { CryptoCurrency } from '@/app/types/types';
 
 const SuggestionItem = memo(
-  ({ item, onSelect }: { item: CryptoCurrency; onSelect: (item: CryptoCurrency) => void }) => {
+  ({ item, onSelect }: { item: CryptoCurrency; onSelect: (coinId: string) => void }) => {
     const handlePress = useCallback(() => {
-      onSelect(item);
+      onSelect(item.id);
     }, [item, onSelect]);
 
     return (

@@ -1,13 +1,22 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Image, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import axios from 'axios';
 import Loading from '@/app/screens/Loading';
-import { useLanguage } from '@/app/mobx/LanguageStore/LanguageStore';
+import { useLanguageStore } from '@/app/mobx/MainStore';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
-import CryptoChart from './CryptoChart'; 
+import CryptoChart from './CryptoChart';
 import TimeframeSelector from './TimeFrameSelector';
 import { Ionicons } from '@expo/vector-icons';
 import abbreviateNumber from '../../helpers/abbreviateNumber';
@@ -18,12 +27,11 @@ import { CoinDetail } from '../../types/types';
 import CryptoInfoCard from './helpers/CryptoInfoCard';
 import CryptoPriceDisplay from './helpers/CryptoPriceDetails';
 
+const systemThickMaterialDark = 'rgba(28, 28, 30, 0.85)';
 
-const systemThickMaterialDark = 'rgba(28, 28, 30, 0.85)'
-
-export default function Coin() { 
-  const {id} = useLocalSearchParams();
-  const {locale, language} = useLanguage();
+export default function Coin() {
+  const { id } = useLocalSearchParams();
+  const { locale, language } = useLanguageStore();
   const [loading, setLoading] = useState(true); //switch to true -> dev
   const [coin, setCoin] = useState<CoinDetail | null>(null);
   const [change, setChange] = useState(0);
@@ -39,9 +47,9 @@ export default function Coin() {
   };
 
   const fetchCoinData = async () => {
-    if(!id) return 
+    if (!id) return;
     setLoading(true);
-    console.log('Loading in [id]')
+    console.log('Loading in [id]');
     try {
       const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${id}`);
       setCoin(response.data);
@@ -51,33 +59,35 @@ export default function Coin() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchCoinData();
   }, [id]);
 
-  if(loading){
-    return <Loading locale={locale}/>
-  } 
-  
+  if (loading) {
+    return <Loading locale={locale} />;
+  }
+
   const chartKey = `chart-${coin?.id}-${timeframe}`;
-  
+
   const getCardBackgroundColor = () => {
-    if (change > 2) return "rgb(5, 102, 54)";
-    if (change > 0) return "rgb(66, 189, 127)";
-    return "rgb(247, 124, 128)";
+    if (change > 2) return 'rgb(5, 102, 54)';
+    if (change > 0) return 'rgb(66, 189, 127)';
+    return 'rgb(247, 124, 128)';
   };
 
   return (
     <>
       <StatusBar style="light" />
       <LinearGradient
-        colors={change > 2 
-          ? [systemThickMaterialDark, 'rgb(5, 102, 54)', 'rgb(5, 102, 54)'] 
-          : change > 0 
-            ? [systemThickMaterialDark, 'rgb(66, 189, 127)', 'rgb(66, 150, 127)'] 
-            : [systemThickMaterialDark, 'rgb(247, 124, 128)', 'rgb(247, 124, 128)']}
+        colors={
+          change > 2
+            ? [systemThickMaterialDark, 'rgb(5, 102, 54)', 'rgb(5, 102, 54)']
+            : change > 0
+              ? [systemThickMaterialDark, 'rgb(66, 189, 127)', 'rgb(66, 150, 127)']
+              : [systemThickMaterialDark, 'rgb(247, 124, 128)', 'rgb(247, 124, 128)']
+        }
         style={styles.background}
       >
         <ScrollView>
@@ -92,27 +102,27 @@ export default function Coin() {
                   <View style={styles.coinMetaContainer}>
                     <Text style={styles.metaText}>{coin?.symbol.toUpperCase()}</Text>
                     <Text style={styles.metaText}>USD</Text>
-                    <Image source={require('@/assets/images/cy_icon_small.png')} style={styles.metaIcon}/>
+                    <Image
+                      source={require('@/assets/images/cy_icon_small.png')}
+                      style={styles.metaIcon}
+                    />
                     <Text style={styles.metaText}>CRYPTO</Text>
                   </View>
                 </View>
               </View>
-              
-              <CryptoPriceDisplay 
-                coin={coin} 
-                locale={locale} 
-              />
-              
+
+              <CryptoPriceDisplay coin={coin} locale={locale} />
+
               <View>
-                <TimeframeSelector 
+                <TimeframeSelector
                   selectedTimeframe={timeframe}
                   onTimeframeChange={handleTimeframeChange}
                   locale={locale}
                 />
               </View>
-              
+
               <View>
-                <CryptoChart 
+                <CryptoChart
                   key={chartKey}
                   coinId={coin?.id || 'bitcoin'}
                   timeframe={timeframe}
@@ -120,18 +130,14 @@ export default function Coin() {
                   language={language}
                 />
               </View>
-              
+
               <View style={styles.sectionContainer}>
                 <View style={styles.sectionHeaderContainer}>
                   <Text style={styles.headerText}>{locale.crypto.statistics}</Text>
                 </View>
-                <CryptoInfoCard 
-                  coin={coin} 
-                  locale={locale} 
-                  abbreviateNumber={abbreviateNumber} 
-                />
+                <CryptoInfoCard coin={coin} locale={locale} abbreviateNumber={abbreviateNumber} />
               </View>
-              
+
               <View style={styles.aiSection}>
                 <Text style={styles.headerText}>{locale.crypto.aiRecommendation}</Text>
                 <View style={styles.aiCardContainer}>
@@ -142,22 +148,26 @@ export default function Coin() {
                   />
                 </View>
               </View>
-              
+
               <View>
                 <Text style={styles.headerText}>
                   {locale.crypto.about} {coin?.id}
                 </Text>
-                <View style={[styles.blockShadow, 
-                  { backgroundColor: getCardBackgroundColor(), height: 'auto' }]}>
+                <View
+                  style={[
+                    styles.blockShadow,
+                    { backgroundColor: getCardBackgroundColor(), height: 'auto' },
+                  ]}
+                >
                   <View>
                     <Text style={styles.descriptionText}>{coin?.description.en}</Text>
                   </View>
-                  <View style={styles.linkContainer}>            
+                  <View style={styles.linkContainer}>
                     <TouchableOpacity onPress={() => setShowWebView(true)}>
                       <View style={styles.linkButton}>
-                        <Ionicons name='earth' size={24} color='#dfdfdf' style={styles.linkIcon}/>
+                        <Ionicons name="earth" size={24} color="#dfdfdf" style={styles.linkIcon} />
                         <Text style={styles.linkButtonText}>{locale.crypto.officialLink}</Text>
-                      </View>                      
+                      </View>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -166,9 +176,13 @@ export default function Coin() {
           </SafeAreaView>
         </ScrollView>
       </LinearGradient>
-      <BrowserView link={coin?.links.homepage[0] || ''} showWebView={showWebView} setShowWebView={setShowWebView} />
+      <BrowserView
+        link={coin?.links.homepage[0] || ''}
+        showWebView={showWebView}
+        setShowWebView={setShowWebView}
+      />
     </>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -185,7 +199,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   blockShadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
@@ -195,8 +209,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
     height: 150,
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   loadingContainer: {
     height: 220,
@@ -208,10 +222,10 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   headerText: {
-    fontSize: 22, 
-    fontWeight: 'bold', 
-    color: 'white', 
-    marginRight: 5
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'white',
+    marginRight: 5,
   },
   linkText: {
     color: '#007AFF',
@@ -242,82 +256,82 @@ const styles = StyleSheet.create({
   },
   // New optimized styles
   coinHeaderContainer: {
-    display: 'flex', 
-    flexDirection: 'row', 
-    alignItems: 'center'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   coinImageContainer: {
-    marginRight: 10
+    marginRight: 10,
   },
-  coinImage: { 
-    width: 50, 
-    height: 50 
+  coinImage: {
+    width: 50,
+    height: 50,
   },
   coinName: {
-    fontSize: 24, 
-    fontWeight: 'bold', 
-    color: 'white'
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
   },
   coinMetaContainer: {
-    display: 'flex', 
-    flexDirection: 'row', 
-    alignItems: 'center'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   metaText: {
-    fontSize: 12, 
-    color: '#dbdbdb'
+    fontSize: 12,
+    color: '#dbdbdb',
   },
   metaIcon: {
-    width: 18, 
-    height: 18, 
-    marginLeft: 5, 
-    borderRadius: 20, 
-    marginRight: 5
+    width: 18,
+    height: 18,
+    marginLeft: 5,
+    borderRadius: 20,
+    marginRight: 5,
   },
   sectionContainer: {
-    display: 'flex', 
-    flexDirection: 'column'
+    display: 'flex',
+    flexDirection: 'column',
   },
   sectionHeaderContainer: {
-    display: 'flex', 
-    flexDirection: 'row', 
-    alignItems: 'center'
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   aiSection: {
-    marginTop: 15
+    marginTop: 15,
   },
   aiCardContainer: {
-    display: 'flex', 
-    justifyContent: 'flex-start', 
-    alignItems: 'center'
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   descriptionText: {
-    color: '#fff', 
-    fontSize: 12
+    color: '#fff',
+    fontSize: 12,
   },
   linkContainer: {
-    marginTop: 10, 
-    display: 'flex', 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    marginBottom: 10
+    marginTop: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
   },
   linkButton: {
-    padding: 5, 
-    backgroundColor: 'rgba(0,0,0,0.1)', 
-    borderRadius: 15, 
-    width: 170, 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    flexDirection: 'row'
+    padding: 5,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    borderRadius: 15,
+    width: 170,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   linkIcon: {
-    marginRight: 5
+    marginRight: 5,
   },
   linkButtonText: {
-    color: '#dfdfdf', 
-    fontSize: 18
-  }
+    color: '#dfdfdf',
+    fontSize: 18,
+  },
 });

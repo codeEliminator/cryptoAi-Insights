@@ -20,8 +20,10 @@ const CoinItem = memo(
       <TouchableOpacity style={styles.coinItem} onPress={handlePress}>
         <View style={styles.coinInfo}>
           <Text style={styles.coinRank}>{index + 1}</Text>
-          <Text style={styles.coinSymbol}>{item.symbol.toUpperCase()}</Text>
-          <Text style={styles.coinName}>{item.name}</Text>
+          <View style={styles.coinGeneral}>
+            <Text style={styles.coinSymbol}>{item.symbol.toUpperCase()}</Text>
+            <Text style={styles.coinName}>{item.name}</Text>
+          </View>
         </View>
         <View style={styles.coinPriceInfo}>
           <Text style={styles.coinPrice}>
@@ -44,9 +46,20 @@ const CoinItem = memo(
       </TouchableOpacity>
     );
   },
-  (prevProps, nextProps) =>
-    prevProps.item.id === nextProps.item.id && prevProps.index === nextProps.index
+  (prevProps, nextProps) => {
+    return (
+      prevProps.item.id === nextProps.item.id &&
+      prevProps.item.current_price === nextProps.item.current_price &&
+      prevProps.item.price_change_percentage_24h === nextProps.item.price_change_percentage_24h &&
+      prevProps.item.market_cap === nextProps.item.market_cap &&
+      prevProps.index === nextProps.index &&
+      prevProps.item.uuid === nextProps.item.uuid &&
+      prevProps.onPress === nextProps.onPress
+    );
+  }
 );
+
+CoinItem.displayName = 'CoinItem';
 export default CoinItem;
 
 const styles = StyleSheet.create({
@@ -58,21 +71,27 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#333',
   },
+  coinGeneral: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
   coinInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   coinRank: {
-    width: 30,
-    fontSize: 14,
+    alignItems: 'center',
+    width: 35,
+    fontSize: 18,
     color: '#aaaaaa',
+    marginRight: 10,
   },
   coinSymbol: {
-    width: 60,
     fontSize: 16,
     fontWeight: 'bold',
     color: '#ffffff',
-    marginRight: 10,
   },
   coinName: {
     fontSize: 14,

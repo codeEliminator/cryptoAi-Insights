@@ -25,7 +25,7 @@ const useAIInfo = (language = 'en', coinId = '') => {
     } catch (error) {
       console.error('Error fetching AI info:', error);
 
-      console.log('Using fallback data');
+      console.log('Using fallback data in useAIInfo');
       setTimeout(() => {
         setRecommendation(bitcoinAnalysis);
       }, 1000);

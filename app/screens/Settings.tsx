@@ -1,20 +1,25 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { 
-  View, 
-  Text, 
-  SafeAreaView, 
-  TouchableOpacity, 
-  StyleSheet, 
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
   Animated,
   Dimensions,
-  StatusBar
+  StatusBar,
 } from 'react-native';
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
 import { useNavigation } from 'expo-router';
-import { useLanguage } from '../mobx/LanguageStore/LanguageStore';
+import { useLanguageStore } from '../mobx/MainStore';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');
+const languageOptions = [
+  { flag: '🇬🇧', language: 'English', code: 'en' },
+  { flag: '🇷🇺', language: 'Русский', code: 'ru' },
+  { flag: '🇫🇷', language: 'Français', code: 'fr' },
+];
 
 interface LanguageOptionProps {
   flag: string;
@@ -24,82 +29,82 @@ interface LanguageOptionProps {
   onPress: (code: string) => void;
 }
 
-const LanguageOption = React.memo(({ flag, language, code, isSelected, onPress }: LanguageOptionProps) => {
-  const animatedValue = React.useRef(new Animated.Value(1)).current;
-  
-  const handlePressIn = useCallback(() => {
-    Animated.timing(animatedValue, {
-      toValue: 0.87,
-      duration: 100,
-      useNativeDriver: true
-    }).start();
-  }, [animatedValue]);
-  
-  const handlePressOut = useCallback(() => {
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 150,
-      useNativeDriver: true
-    }).start();
-  }, [animatedValue]);
+const LanguageOption = React.memo(
+  ({ flag, language, code, isSelected, onPress }: LanguageOptionProps) => {
+    const animatedValue = React.useRef(new Animated.Value(1)).current;
 
-  const gradientColors: [string, string] = useMemo(() => {
-    return isSelected ? ['#4776E6', '#8E54E9'] : ['#2a2a2a', '#1a1a1a'];
-  }, [isSelected]);
+    const handlePressIn = useCallback(() => {
+      Animated.timing(animatedValue, {
+        toValue: 0.87,
+        duration: 100,
+        useNativeDriver: true,
+      }).start();
+    }, [animatedValue]);
 
-  return (
-    <TouchableOpacity
-      activeOpacity={0.9}
-      onPress={() => onPress(code)}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      style={styles.languageOptionContainer}
-    >
-      <Animated.View style={[
-        styles.languageCard,
-        isSelected && styles.selectedCard,
-        { transform: [{ scale: animatedValue }] }
-      ]}>
-        <LinearGradient
-          colors={gradientColors}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.gradient}
-        />
-        <View style={styles.flagContainer}>
-          <Text style={styles.flagEmoji}>{flag}</Text>
-        </View>
-        <Text style={[
-          styles.languageText, 
-          isSelected && styles.selectedText
-        ]}>
-          {language}
-        </Text>
-        {isSelected && (
-          <View style={styles.checkmarkContainer}>
-            <Text style={styles.checkmark}>✓</Text>
+    const handlePressOut = useCallback(() => {
+      Animated.timing(animatedValue, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    }, [animatedValue]);
+
+    const gradientColors: [string, string] = useMemo(() => {
+      return isSelected ? ['#4776E6', '#8E54E9'] : ['#2a2a2a', '#1a1a1a'];
+    }, [isSelected]);
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.9}
+        onPress={() => onPress(code)}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        style={styles.languageOptionContainer}
+      >
+        <Animated.View
+          style={[
+            styles.languageCard,
+            isSelected && styles.selectedCard,
+            { transform: [{ scale: animatedValue }] },
+          ]}
+        >
+          <LinearGradient
+            colors={gradientColors}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.gradient}
+          />
+          <View style={styles.flagContainer}>
+            <Text style={styles.flagEmoji}>{flag}</Text>
           </View>
-        )}
-      </Animated.View>
-    </TouchableOpacity>
-  );
-});
+          <Text style={[styles.languageText, isSelected && styles.selectedText]}>{language}</Text>
+          {isSelected && (
+            <View style={styles.checkmarkContainer}>
+              <Text style={styles.checkmark}>✓</Text>
+            </View>
+          )}
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  },
+  (prevProps, nextProps) => prevProps.isSelected === nextProps.isSelected
+);
 
 const SettingsContent = observer(() => {
   const navigation = useNavigation();
-  const { setLanguage, locale, language } = useLanguage();
+  const { setLanguage, locale, language } = useLanguageStore();
   const [selectedLanguage, setSelectedLanguage] = useState(language);
   const titleOpacity = React.useRef(new Animated.Value(0)).current;
-  
+
   useEffect(() => {
     Animated.timing(titleOpacity, {
       toValue: 1,
       duration: 300,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
-    
+
     navigation.setOptions({
-      title: locale.common?.settings || "Settings",
+      title: locale.common?.settings || 'Settings',
       headerStyle: {
         backgroundColor: '#121212',
         elevation: 0,
@@ -119,32 +124,26 @@ const SettingsContent = observer(() => {
     setSelectedLanguage(language);
   }, [language]);
 
-  const handleLanguageSelect = useCallback((code: string) => {
-    if (code === "en" || code === "ru" || code === "fr") {
-      setSelectedLanguage(code);
-      setLanguage(code);
-    } else {
-      console.error(`Invalid language code: ${code}`);
-    }
-  }, [setLanguage]);
-
-  const languageOptions = useMemo(() => [
-    { flag: "🇬🇧", language: "English", code: "en" },
-    { flag: "🇷🇺", language: "Русский", code: "ru" },
-    { flag: "🇫🇷", language: "Français", code: "fr" },
-  ], []);
+  const handleLanguageSelect = useCallback(
+    (code: string) => {
+      if (code === 'en' || code === 'ru' || code === 'fr') {
+        setSelectedLanguage(code);
+        setLanguage(code);
+      } else {
+        console.error(`Invalid language code: ${code}`);
+      }
+    },
+    [setLanguage]
+  );
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#121212" />
-      
-      <Animated.Text style={[
-        styles.title,
-        { opacity: titleOpacity }
-      ]}>
-        {locale.common?.languagePreferences || "Select your language"}
+
+      <Animated.Text style={[styles.title, { opacity: titleOpacity }]}>
+        {locale.common?.languagePreferences || 'Select your language'}
       </Animated.Text>
-      
+
       <View style={styles.languagesContainer}>
         {languageOptions.map(option => (
           <LanguageOption
@@ -274,8 +273,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const Settings = observer(() => (
-  <SettingsContent />
-));
+const Settings = observer(() => <SettingsContent />);
 
 export default Settings;

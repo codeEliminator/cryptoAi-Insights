@@ -16,17 +16,16 @@ import { useCryptoStore } from '../mobx/MainStore';
 
 const HomeScreen = () => {
   const router = useRouter();
-  const cryptoStore = useCryptoStore();
-  const { cryptoData, loading, refreshing, marketTrend } = cryptoStore;
+  const { cryptoData, loading, refreshing, marketTrend, loadMore, refresh } = useCryptoStore();
   const { locale, language } = useLanguageStore();
 
   const newFormattedDate = useMemo(() => formattedDate(language), [language]);
 
   const onRefresh = useCallback(() => {
-    cryptoStore.refresh();
-  }, [cryptoStore]);
+    refresh();
+  }, [refresh]);
 
-  if (loading && !refreshing) {
+  if (loading) {
     return <Loading locale={locale} />;
   }
 
@@ -50,7 +49,7 @@ const HomeScreen = () => {
             />
           }
         >
-          <Heatmap cryptoData={cryptoData} locale={locale} />
+          <Heatmap cryptoData={cryptoData} locale={locale} loadMore={loadMore} />
           <TrendingCoins cryptoData={cryptoData} locale={locale} router={router} />
           <AiRecommendations locale={locale} router={router} language={language} />
           <View style={styles.footer}>

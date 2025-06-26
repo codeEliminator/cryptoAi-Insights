@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import { useLanguage } from '../mobx/LanguageStore/LanguageStore';
+import { useLanguageStore } from '../mobx/MainStore';
 import { observer } from 'mobx-react-lite';
 import Header from '../components/reusable-ai-components/Header';
 import { AiService } from '@/app/utils/ai/aiService';
@@ -47,7 +47,7 @@ export enum AiTab {
 }
 
 function AiScreenComponent() {
-  const { locale, language } = useLanguage();
+  const { locale, language } = useLanguageStore();
   const [activeTab, setActiveTab] = useState<AiTab>(AiTab.CHAT);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');

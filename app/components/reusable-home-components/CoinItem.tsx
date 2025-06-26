@@ -3,28 +3,28 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { CryptoCurrency } from '../../types/types';
 import { Ionicons } from '@expo/vector-icons';
 
-const CoinItem = React.memo(({ coin, onPress }: { coin: CryptoCurrency; onPress?: () => void,  }) => {
-  const isPositive = coin.price_change_percentage_24h >= 0;
-  
-  return (
-    <TouchableOpacity 
-      style={styles.coinItem}
-      onPress={onPress}
-    >
-      <View style={styles.coinInfo}>
-        <Text style={styles.coinSymbol}>{coin.symbol.toUpperCase()}</Text>
-        <Text style={styles.coinName}>{coin.name}</Text>
-      </View>
-      <View style={styles.coinPriceInfo}>
-        <Text style={styles.coinPrice}>${coin.current_price.toLocaleString()}</Text>
-        <Text style={[styles.coinChange, { color: isPositive ? '#4CAF50' : '#FF6B6B' }]}>
-          <Ionicons name={isPositive ? "arrow-up" : "arrow-down"} size={12} /> 
-          {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-});
+const CoinItem = React.memo(
+  ({ coin, onPress }: { coin: CryptoCurrency; onPress?: () => void }) => {
+    const isPositive = coin.price_change_percentage_24h >= 0;
+
+    return (
+      <TouchableOpacity style={styles.coinItem} onPress={onPress}>
+        <View style={styles.coinInfo}>
+          <Text style={styles.coinSymbol}>{coin.symbol.toUpperCase()}</Text>
+          <Text style={styles.coinName}>{coin.name}</Text>
+        </View>
+        <View style={styles.coinPriceInfo}>
+          <Text style={styles.coinPrice}>${coin.current_price.toLocaleString()}</Text>
+          <Text style={[styles.coinChange, { color: isPositive ? '#4CAF50' : '#FF6B6B' }]}>
+            <Ionicons name={isPositive ? 'arrow-up' : 'arrow-down'} size={12} />
+            {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  },
+  (prevProps, nextProps) => prevProps.coin.uuid === nextProps.coin.uuid
+);
 
 const styles = StyleSheet.create({
   coinItem: {

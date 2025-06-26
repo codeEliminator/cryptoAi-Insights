@@ -1,16 +1,16 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { createContext, useContext, useEffect } from 'react';
-import { observer } from 'mobx-react-lite';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CryptoCurrency } from '../../types/types';
 import { ICryptoStore } from './types';
+import getUniqueId from '../../helpers/getUniqueId';
 
 class CryptoStore implements ICryptoStore {
   cryptoData: CryptoCurrency[] = [];
   loading = true;
   refreshing = false;
   error: string | null = null;
-
+  private readonly CACHE_DURATION = 5 * 60 * 1000;
   page = 1;
   hasMore = true;
 
@@ -18,18 +18,38 @@ class CryptoStore implements ICryptoStore {
   marketTrend: 'up' | 'down' | 'neutral' = 'neutral';
   constructor() {
     makeAutoObservable(this);
+    this._getData();
     this.fetchCryptoData(true, false);
   }
 
-  fetchCryptoData = async (isInitialLoad = false, forceRefresh = false) => {
-    const CACHE_DURATION = 5 * 60 * 1000;
+  _getData = async () => {
+    try {
+      const cryptoData = await AsyncStorage.getItem('cryptoData');
+      if (cryptoData) {
+        this.cryptoData = JSON.parse(cryptoData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  _storeData = async (cryptoData: CryptoCurrency[]) => {
+    try {
+      await AsyncStorage.setItem('cryptoData', JSON.stringify(cryptoData));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchCryptoData = async (isInitialLoad = false, forceRefresh = false, loadMore = false) => {
     const now = Date.now();
     if (
       !forceRefresh &&
       !isInitialLoad &&
       this.cryptoData.length > 0 &&
       this.lastFetchTime &&
-      now - this.lastFetchTime < CACHE_DURATION
+      now - this.lastFetchTime < this.CACHE_DURATION &&
+      !loadMore
     ) {
       return this.cryptoData;
     }
@@ -53,11 +73,16 @@ class CryptoStore implements ICryptoStore {
         }
       );
       runInAction(() => {
+        const data = response.data.map(item => ({
+          ...item,
+          uuid: getUniqueId(),
+        }));
         if (isInitialLoad || forceRefresh) {
-          this.cryptoData = response.data;
+          this.cryptoData = data;
         } else {
-          this.cryptoData = [...this.cryptoData, ...response.data];
+          this.cryptoData = [...this.cryptoData, ...data];
         }
+        this._storeData(this.cryptoData);
 
         this.lastFetchTime = now;
         this.hasMore = response.data.length === 200;
@@ -75,16 +100,15 @@ class CryptoStore implements ICryptoStore {
         this.refreshing = false;
       });
 
-      console.error('Error fetching crypto data:', error);
       return null;
     }
   };
-  async loadMore() {
+  loadMore = async () => {
     if (this.loading || !this.hasMore) return;
 
     this.page += 1;
-    await this.fetchCryptoData(false);
-  }
+    await this.fetchCryptoData(false, false, true);
+  };
 
   async refresh() {
     this.refreshing = true;
@@ -106,20 +130,5 @@ class CryptoStore implements ICryptoStore {
 }
 
 const cryptoStore = new CryptoStore();
-const CryptoContext = createContext<CryptoStore>(cryptoStore);
-
-interface CryptoProviderProps {
-  children: React.ReactNode;
-}
-
-export const CryptoProvider: React.FC<CryptoProviderProps> = observer(({ children }) => {
-  useEffect(() => {
-    cryptoStore.fetchCryptoData(true, false);
-  }, []);
-
-  return <CryptoContext.Provider value={cryptoStore}>{children}</CryptoContext.Provider>;
-});
-
-export const useCrypto = () => useContext(CryptoContext);
 
 export default cryptoStore;
