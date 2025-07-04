@@ -4,12 +4,15 @@ import { LocalizationData } from '@/app/types/LocalizationData';
 import { MarketAnalysis } from '@/app/(tabs)/ai';
 import { ANALYSIS_PROMPT, SYSTEM_PROMPT } from '@/app/services/Prompts';
 import useGemini from '@/app/hooks/useGemini';
+import { TokenInfo } from '@/app/mobx/WalletStore/types'
+import { analyseUserTokensPrompt } from '@/app/services/Prompts';
 
 interface AiMarketAnalysisProps {
   setError: (error: string) => void;
   setLoading: (loading: boolean) => void;
   setAnalysisData: (analysisData: MarketAnalysis) => void;
   language: string;
+  tokens?: TokenInfo[];
 }
 
 interface AiSendMessageProps {
@@ -90,18 +93,28 @@ export class AiService {
   }
 
   public static async requestMarketAnalysis(props: AiMarketAnalysisProps): Promise<void> {
+    
     const { setError, setLoading, setAnalysisData, language } = props;
     setLoading(true);
     setError('');
     try {
-      const text = await AiService.generateAiResponse(
-        `${ANALYSIS_PROMPT}\nЯзык ответа: ${language}`
-      );
+      const { tokens } = props;
+      let prompt = '';
+
+      if (tokens?.length) {
+        console.log('User tokens found');
+        prompt = analyseUserTokensPrompt(tokens);
+      } else {
+        console.log('No tokens provided');
+        prompt = ANALYSIS_PROMPT;
+      }
+      
+      const text = await AiService.generateAiResponse(`${prompt}\nЯзык ответа: ${language}`);
 
       try {
         const cleanedText = text.replace(/```json|```/g, '').trim();
         const parsedData = JSON.parse(cleanedText);
-
+        
         if (!parsedData.timestamp) {
           parsedData.timestamp = new Date().toISOString();
         }

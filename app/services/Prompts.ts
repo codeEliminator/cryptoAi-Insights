@@ -1,3 +1,6 @@
+import { TokenInfo } from "../mobx/WalletStore/types";
+
+
 export const SYSTEM_PROMPT = `
 Ты — AI-аналитик рынка криптовалют. Твоя задача — отвечать на вопросы пользователей о криптовалютах, 
 анализировать рыночные тенденции и предоставлять рекомендации. Твои ответы должны быть информативными, 
@@ -36,3 +39,46 @@ export const ANALYSIS_PROMPT = `
 
 Ответ должен быть только в формате JSON, без дополнительного текста.
 `;
+
+
+export const analyseUserTokensPrompt = (tokens: TokenInfo[]) => {
+  const simplifiedTokens = tokens.map(token => ({
+    name: token.name,
+    symbol: token.symbol,
+    balance: token.balance,
+    address: token.address
+  }));
+  const ANALYSE_USER_TOKENS_PROMPT = `
+      Ты — финансовый аналитик, специализирующийся на криптовалютах.
+
+      Проанализируй переданный тебе массив токенов (с информацией о названии, символе, балансе и адресе), и выдай рекомендации в **строго формате JSON**. Не добавляй никакого дополнительного текста, вывода или пояснений — только JSON.
+      ${JSON.stringify(simplifiedTokens)}
+      Твоя задача — для **каждого токена** выдать:
+      - Название токена
+      - Символ токена
+      - Рекомендуемое действие: "buy", "hold", "sell"
+      - Краткую причину рекомендации
+      - Уровень уверенности (от 0 до 100)
+
+      Ответ должен быть **только в следующем формате**:
+
+      {
+        "marketSentiment": 65,
+        "sentimentAnalysis": "Текстовый анализ настроения рынка...",
+        "opportunities": [
+          {
+            "coinName": "Bitcoin",
+            "action": "buy",
+            "reason": "Причина рекомендации...",
+            "confidence": 80
+          },
+          ...
+        ],
+        "marketTrends": "Описание текущих трендов рынка...",
+        "timestamp": "2023-04-07T12:34:56.789Z"
+      }
+
+      Не добавляй никаких вступлений, пояснений, заголовков — только JSON, строго в указанной структуре.
+      `;
+  return ANALYSE_USER_TOKENS_PROMPT
+}

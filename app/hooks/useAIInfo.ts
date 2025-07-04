@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from 'react';
-import { bitcoinAnalysis } from '../helpers/fakeTextDataForAIReccom';
 import useGemini from './useGemini';
 
 const useAIInfo = (language = 'en', coinId = '') => {
@@ -18,16 +17,16 @@ const useAIInfo = (language = 'en', coinId = '') => {
     setErrorAiInfo(null);
 
     try {
-      const prompt = `Проанализируй текущие рыночные тенденции криптовалюты ${coinId} и оцени её инвестиционный потенциал. Дай краткий, но аргументированный ответ: стоит ли её покупать, держать (если она уже есть) или продавать. Понимаю, что это не финансовый совет, но важно услышать твоё мнение на основе данных. Если ты ничего не знаешь про эту криптовалюту, напиши "Нет рекомендаций по этой криптовалюете "`;
+      const prompt = `Проанализируй текущие рыночные тенденции криптовалюты ${coinId} и оцени её инвестиционный потенциал. Дай краткий, но аргументированный ответ: стоит ли её покупать, держать (если она уже есть) или продавать. Понимаю, что это не финансовый совет, но важно услышать твоё мнение на основе данных. Если ты ничего не знаешь про эту криптовалюту, напиши "Нет рекомендаций по этой криптовалюете. Не добавляй никаких вступлений, пояснений, заголовков."`;
 
-      const text = await useGemini(prompt);
+      const text = await useGemini(prompt + '\nЯзык ответа: ' + language);
       setRecommendation(text);
     } catch (error) {
       console.error('Error fetching AI info:', error);
 
       console.log('Using fallback data in useAIInfo');
       setTimeout(() => {
-        setRecommendation(bitcoinAnalysis);
+        setRecommendation('Ai doesnt know about this coin. But you can still buy it');
       }, 1000);
 
       setErrorAiInfo('Error fetching AI response');

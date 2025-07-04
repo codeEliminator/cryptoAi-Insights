@@ -18,7 +18,7 @@ CryptoAI Insights is an advanced cryptocurrency analytics platform that leverage
 
 - React Native with Atomic Design pattern
 - Mobx for state management
-- React Query for data fetching
+- Axios for data fetching
 - Styled Components for UI styling
 
 ### Backend
@@ -45,25 +45,25 @@ CryptoAI Insights is an advanced cryptocurrency analytics platform that leverage
 
 ## 📱 Application Screenshots
 
-![CryptoAI Market Heatmap](./assets/images/cryptoai-heatmap-screenshot.png)
+<img src="assets/images/cryptoAi-hetmap.png" alt="CryptoAi HeatMap" width="300" style="border-radius: 12px;" />
 
 CryptoAI Insights mobile app showing the market heatmap and top gainers
 
-![CryptoAI Coin Screen](./assets/images/cryptoai-coin-screen.png)
+<img src="assets/images/cryptoAi-coin-screen.png" alt="CryptoAi Coin Screen" width="300" style="border-radius: 12px;" />
 
 CryptoAI Insights mobile app showing the coin information
 
-![CryptoAI Ai Screen](./assets/images/CRYPTOAI_INSIGHTS_AI_SCREEN.png)
+<img src="/assets/images/CRYPTOAI_INSIGHTS_AI_SCREEN.png" alt="CryptoAi Ai Screen" width="300" style="border-radius: 12px;" />
 
 CryptoAI Insights mobile app AI ChatBot
 
-![CryptoAI Ai Screen](./assets/images/CRYPTOAI_INSIGHTS_AI_ANALYASIS_SCREEN.png)
+<img src="/assets/images/CRYPTOAI_INSIGHTS_AI_ANALYASIS_SCREEN.png" alt="CryptoAi Analysis Screen" width="300" style="border-radius: 12px;" />
 
 CryptoAI Insights mobile app AI analysis per a request
 
-## 🎥 Demo Video
+## 🎥 Profile Demo Video
 
-![Demo GIF](./assets/videos/PROFILE_SCREEN.gif)
+<img src="assets/videos/PROFILE_SCREEN.gif" alt="CryptoAi Coin Screen" width="300" style="border-radius: 12px;" />
 
 CryptoAI Insights mobile app Profile screen animation
 

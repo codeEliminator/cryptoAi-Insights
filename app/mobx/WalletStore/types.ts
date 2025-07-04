@@ -6,6 +6,7 @@ export interface TokenInfo {
   decimals?: number;
   thumbnail?: string | null;
   logo?: string | null;
+  uuid: string;
 }
 
 export interface NetworkParams {
@@ -15,7 +16,7 @@ export interface NetworkParams {
 }
 
 export interface TokenResponse {
-  token_address: string
+  token_address: string;
   name?: string;
   symbol?: string;
   balance?: string;
@@ -33,11 +34,11 @@ export interface WalletStore {
   isLoading: boolean;
   error: string | null;
   walletInfo: Record<string, any> | null;
-  
+
   setWalletState(
-    address: `0x${string}` | null | undefined, 
-    chainId: number | null, 
-    isConnected: boolean, 
+    address: `0x${string}` | null | undefined,
+    chainId: number | null,
+    isConnected: boolean,
     walletInfo: Record<string, any> | null
   ): void;
   forceLogin(): void;

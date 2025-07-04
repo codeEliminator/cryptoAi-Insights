@@ -46,6 +46,7 @@ const MarketAnalysisBlock: React.FC<MarketAnalysisBlockProps> = ({
 
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>{locale.ai.topOpportunities}</Text>
+      
       {analysisData.opportunities.map((opportunity, index) => (
         <View key={`opportunity-${index}`} style={styles.opportunityItem}>
           <View style={styles.opportunityHeader}>

@@ -8,17 +8,15 @@ import {
   StyleSheet,
   ActivityIndicator,
   ScrollView,
-  StyleProp,
-  ViewStyle,
-  TextStyle,
   StatusBar,
-  Image,
 } from 'react-native';
 import { observer } from 'mobx-react-lite';
+import AddressContainer from '../components/reusable-profile-components/AddressContainer/AddressContainer';
+import NetworkContainer from '../components/reusable-profile-components/NetworkContainer/NetworkContainer';
+import BalanceContainer from '../components/reusable-profile-components/BalanceContainer/BalanceContainer';
 import LoginScreen from '../components/reusable-profile-components/LoginScreen';
 import ForceLoginScreen from '../components/reusable-profile-components/ForceLoginScreen';
-import TokenCard from '../components/reusable-profile-components/TokekCard';
-import getUniqueId from '../helpers/getUniqueId';
+import TokenCard from '../components/reusable-profile-components/TokenCard';
 import {
   mainnet,
   polygon,
@@ -40,37 +38,22 @@ import {
   AppKit,
   useDisconnect,
 } from '@reown/appkit-ethers-react-native';
-import Constants from 'expo-constants';
 import { useLanguageStore, useWalletStore } from '../mobx/MainStore';
-import formatNumber from '../helpers/formatNumber';
-
-interface ProfileProps {}
-const projectId = Constants.expoConfig?.extra?.PROJECT_ID;
-
-const metadata = {
-  name: 'CryptoAi Insights',
-  description: 'AI-powered crypto analytics and insights',
-  url: 'https://reown.com/appkit',
-  icons: ['https://imgur.com/a/qvUyFQZ'],
-  redirect: {
-    native: 'cryptoaiinsights://',
-  },
-};
+import { PROJECTID, metadata } from '../configs/AppConfig';
 
 const config = defaultConfig({ metadata });
 
 const chains = [mainnet, polygon, bsc, avalanche, arbitrum, optimism, fantom, base];
 
 createAppKit({
-  projectId,
+  projectId: PROJECTID,
   chains,
   config,
   enableAnalytics: true,
 });
 
-const Profile: React.FC<ProfileProps> = observer(() => {
+const Profile = observer(() => {
   const { language, locale } = useLanguageStore();
-  const [currentTitle, setCurrentTitle] = useState(0);
   const walletStore = useWalletStore();
   const { open, close } = useAppKit();
   const { disconnect } = useDisconnect();
@@ -94,16 +77,6 @@ const Profile: React.FC<ProfileProps> = observer(() => {
     }
   }, [walletProvider]);
 
-  useEffect(() => {
-    setTimeout(
-      () =>
-        setCurrentTitle(
-          currentTitle + 1 < locale.profile.entryTitles.length ? currentTitle + 1 : 0
-        ),
-      2000
-    );
-  });
-
   const handleConnect = (): void => {
     open({ view: 'Connect' });
   };
@@ -125,45 +98,19 @@ const Profile: React.FC<ProfileProps> = observer(() => {
           <ForceLoginScreen walletStore={walletStore} />
         ) : (
           <View style={styles.walletContainer}>
-            <View style={styles.addressContainer}>
-              <Text style={styles.label}>{locale.profile.walletAddress}</Text>
-              <Text style={styles.address}>
-                {address?.substring(0, 6)}...
-                {address?.substring(address.length - 4)}
-              </Text>
+            <AddressContainer locale={locale} walletInfo={walletInfo} walletStore={walletStore} />
 
-              {walletInfo && (
-                <View style={styles.walletInfoContainer}>
-                  <Text style={styles.walletName}>{walletInfo.name || 'Wallet'}</Text>
-                </View>
-              )}
-            </View>
-
-            <View style={styles.networkContainer}>
-              <Text style={styles.label}>{locale.profile.network}</Text>
-              <Text style={styles.networkName}>
-                {chainId === 1 ? 'Ethereum' : chainId === 137 ? 'Polygon' : `Chain ID: ${chainId}`}
-              </Text>
-
-              <TouchableOpacity
-                style={styles.switchNetworkButton}
-                onPress={() => handleSwitchNetwork()}
-              >
-                <Text style={styles.switchNetworkText}>{locale.profile.switchToEthereum}</Text>
-              </TouchableOpacity>
-            </View>
+            <NetworkContainer
+              locale={locale}
+              walletStore={walletStore}
+              handleSwitchNetwork={handleSwitchNetwork}
+            />
 
             {walletStore.isLoading ? (
               <ActivityIndicator size="large" color="#0000ff" style={styles.loader} />
             ) : (
               <>
-                <View style={styles.balanceContainer}>
-                  <Text style={styles.label}>{locale.profile.nativeBalance}</Text>
-                  <Text style={styles.balance}>
-                    {formatNumber(walletStore.balance)}
-                    {walletStore.getNetworkParams()?.currency}
-                  </Text>
-                </View>
+                <BalanceContainer locale={locale} walletStore={walletStore} />
 
                 <View style={styles.tokensContainer}>
                   <Text style={styles.label}>{locale.profile.nativeBalance}</Text>
@@ -172,7 +119,7 @@ const Profile: React.FC<ProfileProps> = observer(() => {
                     <Text style={styles.noTokens}>{locale.profile.noTokensFound}</Text>
                   ) : (
                     walletStore.tokens.map((token, index) => (
-                      <TokenCard key={getUniqueId()} token={token} index={index} />
+                      <TokenCard key={token.uuid} token={token} index={index} />
                     ))
                   )}
                 </View>
@@ -228,63 +175,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  addressContainer: {
-    marginBottom: 16,
-    padding: 12,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-  },
   label: {
     fontSize: 14,
     color: '#666',
     marginBottom: 4,
-  },
-  address: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  walletInfoContainer: {
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-  },
-  walletName: {
-    fontSize: 14,
-    color: '#666',
-  },
-  networkContainer: {
-    marginBottom: 16,
-    padding: 12,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-  },
-  networkName: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-  switchNetworkButton: {
-    backgroundColor: '#3498db',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    alignSelf: 'flex-start',
-    marginTop: 8,
-  },
-  switchNetworkText: {
-    color: 'white',
-    fontWeight: '500',
-  },
-  balanceContainer: {
-    marginBottom: 16,
-    padding: 12,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-  },
-  balance: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   tokensContainer: {
     marginBottom: 16,

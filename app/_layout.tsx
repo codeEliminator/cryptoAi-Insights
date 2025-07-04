@@ -32,7 +32,7 @@ export default function RootLayout() {
             options={({ navigation, route }) => ({
               headerTitleStyle: { fontSize: 22, color: 'white' },
               title: (route.params as RouteParams)?.id
-                ? `${String((route.params as RouteParams).id).toUpperCase()}`
+                ? `${String((route.params as RouteParams).id).toUpperCase().substring(0, 20)}`
                 : 'Currency?',
               headerTransparent: true,
               headerBlurEffect: 'systemThickMaterialDark',

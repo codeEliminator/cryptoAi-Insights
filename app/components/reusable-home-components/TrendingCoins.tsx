@@ -2,35 +2,61 @@ import React, { memo, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { CryptoCurrency } from '../../types/types';
 import CoinItem from './CoinItem';
-import { useTrendingCoins } from "../../hooks/useTrendingCoins";
+import { useTrendingCoins } from '../../hooks/useTrendingCoins';
 import { LocalizationData } from '../../types/LocalizationData';
 
-const TrendingCoins = memo(({ cryptoData, locale, router }: { cryptoData: CryptoCurrency[], locale: LocalizationData, router: any }) => {
-  const { gainers, losers } = useTrendingCoins(cryptoData);
+const TrendingCoins = memo(
+  ({
+    cryptoData,
+    locale,
+    router,
+  }: {
+    cryptoData: CryptoCurrency[];
+    locale: LocalizationData;
+    router: any;
+  }) => {
+    const { gainers, losers } = useTrendingCoins(cryptoData);
 
-  if (!gainers.length || !losers.length) return null;
+    if (!gainers.length || !losers.length) return null;
+    console.log('render inside Trending Coins');
+    return (
+      <View style={styles.trendingContainer}>
+        <View style={styles.trendingSection}>
+          <Text style={styles.sectionTitle}>{locale.home.topGainers}</Text>
+          {gainers.map(coin => (
+            <CoinItem
+              key={coin.id}
+              coin={coin}
+              onPress={() => {
+                router.push(`/screens/crypto/${coin.id}`);
+              }}
+            />
+          ))}
+        </View>
 
-  return (
-    <View style={styles.trendingContainer}>
-      <View style={styles.trendingSection}>
-        <Text style={styles.sectionTitle}>{locale.home.topGainers}</Text>
-        {gainers.map(coin => (
-          <CoinItem key={coin.id} coin={coin} onPress={() => { router.push(`/screens/crypto/${coin.id}` )}}/>
-        ))}
+        <View style={styles.trendingSection}>
+          <Text style={styles.sectionTitle}>{locale.home.topLosers}</Text>
+          {losers.map(coin => (
+            <CoinItem
+              key={coin.id}
+              coin={coin}
+              onPress={() => {
+                router.push(`/screens/crypto/${coin.id}`);
+              }}
+            />
+          ))}
+        </View>
       </View>
-
-      <View style={styles.trendingSection}>
-        <Text style={styles.sectionTitle}>{locale.home.topLosers}</Text>
-        {losers.map(coin => (
-          <CoinItem key={coin.id} coin={coin} onPress={() => { router.push(`/screens/crypto/${coin.id}` )}}/>
-        ))}
-      </View>
-    </View>
-  );
-}, (prevProps, nextProps) => 
-  prevProps.locale === nextProps.locale &&
-  prevProps.cryptoData.length === nextProps.cryptoData.length &&
-  prevProps.cryptoData.every((coin, i) => coin.id === nextProps.cryptoData[i].id && coin.price_change_percentage_24h === nextProps.cryptoData[i].price_change_percentage_24h)
+    );
+  },
+  (prevProps, nextProps) =>
+    prevProps.locale === nextProps.locale &&
+    prevProps.cryptoData.length === nextProps.cryptoData.length &&
+    prevProps.cryptoData.every(
+      (coin, i) =>
+        coin.id === nextProps.cryptoData[i].id &&
+        coin.price_change_percentage_24h === nextProps.cryptoData[i].price_change_percentage_24h
+    )
 );
 
 const styles = StyleSheet.create({

@@ -14,7 +14,7 @@ const CoinItem = React.memo(
           <Text style={styles.coinName}>{coin.name}</Text>
         </View>
         <View style={styles.coinPriceInfo}>
-          <Text style={styles.coinPrice}>${coin.current_price.toLocaleString()}</Text>
+          <Text style={styles.coinPrice}>${coin.current_price.toString()}</Text>
           <Text style={[styles.coinChange, { color: isPositive ? '#4CAF50' : '#FF6B6B' }]}>
             <Ionicons name={isPositive ? 'arrow-up' : 'arrow-down'} size={12} />
             {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#333',
   },
   coinInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   coinSymbol: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#ffffff',
     marginRight: 10,
-    width: 50,
+    width: 'auto',
   },
   coinName: {
     fontSize: 14,
