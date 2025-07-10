@@ -1,8 +1,5 @@
-import { useLanguageStore } from '../mobx/MainStore';
 
-export default function useLocalizedDays() {
-  const { language } = useLanguageStore();
-  const lang = language;
+export default function getLocalizedDays(lang: string): string[] {
   switch (lang.toLowerCase()) {
     case 'en':
     default:

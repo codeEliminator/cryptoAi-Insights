@@ -7,6 +7,7 @@ export default {
     save: 'Сохранить',
     languagePreferences: 'Выберите ваш язык',
     refreshed: 'Обновлено',
+    noData: 'Нет данных для отображения',
   },
   tabs: {
     home: "Главная",

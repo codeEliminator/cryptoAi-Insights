@@ -7,6 +7,7 @@ export default {
     save: 'Save',
     languagePreferences: 'Select your language',
     refreshed: 'Refreshed',
+    noData: "No data available",
   },
   tabs: {
     home: "Home",

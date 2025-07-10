@@ -7,6 +7,7 @@ export interface LocalizationData {
     save: string;
     languagePreferences: string;
     refreshed: string;
+    noData: string;
   };
   tabs: {
     home: string;

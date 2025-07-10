@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     objectFit: 'contain',
   },
   title: {
-    color: '#ffffff',
+    color: '#e3e6e4',
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
