@@ -1,8 +1,5 @@
-import { useLanguageStore } from '../mobx/MainStore';
 
-export default function useLocalizedMonths() {
-  const { language } = useLanguageStore();
-  const lang = language;
+export default function getLocalizedMonths(lang: string): string[] {
   switch (lang.toLowerCase()) {
     case 'en':
     default:
